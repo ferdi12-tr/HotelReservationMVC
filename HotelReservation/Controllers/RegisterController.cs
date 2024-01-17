@@ -59,7 +59,7 @@ namespace HotelReservation.Controllers
                     client.Send(mimeMessage);
                     client.Disconnect(true);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "ConfirmMail", new { userEmail = user.Email });
                 }
                 else
                 {
