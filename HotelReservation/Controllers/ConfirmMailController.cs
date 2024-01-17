@@ -32,7 +32,7 @@ namespace HotelReservation.Controllers
 			{
 				user.EmailConfirmed = true;	
 				await userManager.UpdateAsync(user);
-				return RedirectToAction("Index", "Home");
+				return RedirectToAction("Index", "Login");
 			}
 			return View();
 		}
