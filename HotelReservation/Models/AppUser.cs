@@ -7,5 +7,6 @@ namespace HotelReservation.Models
         public string? Name { get; set; }
         public string? Surname { get; set; }
         public string? ImageUrl { get; set; }
+        public int EmailConfirmCode { get; set; }
     }
 }
