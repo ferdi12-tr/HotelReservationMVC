@@ -17,16 +17,15 @@ namespace HotelReservation.Controllers
         {
             return View();
         }
-
-        public IActionResult Privacy()
+        
+        public IActionResult DisplayBlogs()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult DisplayHotels()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
     }
 }
