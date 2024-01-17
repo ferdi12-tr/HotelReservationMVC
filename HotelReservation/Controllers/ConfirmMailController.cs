@@ -30,6 +30,8 @@ namespace HotelReservation.Controllers
 			var user = await userManager.FindByEmailAsync(confirmMailViewModel.RegisteredEmail);
 			if (user.EmailConfirmCode.ToString().Equals(confirmMailViewModel.ConfirmCode))
 			{
+				user.EmailConfirmed = true;	
+				await userManager.UpdateAsync(user);
 				return RedirectToAction("Index", "Home");
 			}
 			return View();
