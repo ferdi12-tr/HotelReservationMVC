@@ -19,7 +19,7 @@
                         <div class="photo-thumbnail">
                             <div class="photo">
                                 <img src="~/img/room/img-3.jpg" alt="photo" class="img-fluid w-100">
-                                <a href="rooms-details.html">
+                                <a "@Url.Action("RoomDetails", "Room", new { Area = "Customer", roomId = 1 })">
                                     <span class="blog-one__plus"></span>
                                 </a>
                             </div>
@@ -37,12 +37,14 @@
                         <!-- Detail -->
                         <div class="detail clearfix">
                             <h3>
-                                <a href="rooms-details.html">Single Room </a>
+                                <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=1})">
+                                    Single Room
+
+                                </a>
                             </h3>
                             <p class="location">
-                                <a href="rooms-details.html">
                                     <i class="fa fa-map-marker"></i>123 Kathal St. Tampa City,
-                                </a>
+                                
                             </p>
                             <div class="fecilities">
                                 <ul>
@@ -80,7 +82,7 @@
                         <div class="photo-thumbnail">
                             <div class="photo">
                                 <img src="~/img/room/img-5.jpg" alt="photo" class="img-fluid w-100">
-                                <a href="rooms-details.html">
+                                <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=2})">
                                     <span class="blog-one__plus"></span>
                                 </a>
                             </div>
@@ -98,12 +100,12 @@
                         <!-- Detail -->
                         <div class="detail clearfix">
                             <h3>
-                                <a href="rooms-details.html">Luxury Room</a>
+                                <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=2})">
+                                    Luxury Room
+                                    </a>
                             </h3>
                             <p class="location">
-                                <a href="rooms-details.html">
                                     <i class="fa fa-map-marker"></i>123 Kathal St. Tampa City,
-                                </a>
                             </p>
                             <div class="fecilities">
                                 <ul>
@@ -141,7 +143,7 @@
                         <div class="photo-thumbnail">
                             <div class="photo">
                                 <img src="~/img/room/img-6.jpg" alt="photo" class="img-fluid w-100">
-                                <a href="rooms-details.html">
+                                <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=3})">
                                     <span class="blog-one__plus"></span>
                                 </a>
                             </div>
@@ -159,12 +161,11 @@
                         <!-- Detail -->
                         <div class="detail clearfix">
                             <h3>
-                                <a href="rooms-details.html">Double Room</a>
+                                <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=3})">Double Room</a>
                             </h3>
                             <p class="location">
-                                <a href="rooms-details.html">
                                     <i class="fa fa-map-marker"></i>123 Kathal St. Tampa City,
-                                </a>
+                                
                             </p>
                             <div class="fecilities">
                                 <ul>

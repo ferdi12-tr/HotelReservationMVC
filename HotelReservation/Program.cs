@@ -45,6 +45,11 @@ namespace HotelReservation
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+            app.MapAreaControllerRoute(
+                name: "Customer",
+                areaName: "Customer",
+                pattern: "{controller=Room}/{action=Index}/{id?}");
+
             app.Run();
         }
     }
