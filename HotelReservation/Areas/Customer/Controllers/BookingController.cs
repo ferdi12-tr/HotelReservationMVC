@@ -36,5 +36,26 @@ namespace HotelReservation.Areas.Customer.Controllers
         {
             return View(selectedRoom);
         }
+
+        public IActionResult PersonalInfo(BookModelView model) // To display booked room and dates
+        {
+            return View(model);
+        }
+
+        public IActionResult PaymentInfo(BookModelView model)
+        {
+            return View(model);
+        }
+
+        public IActionResult ReviewBook(BookModelView model)
+        {
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ConfirmBooking(BookModelView modelView)
+        {
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

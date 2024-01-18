@@ -55,9 +55,12 @@
                 </div>
                 <div class="clearfix"></div>
 
-                @* <form> *@
-                @await Html.PartialAsync("SelectedRoom", Model.Room); 
-                @* </form> *@
+                <form method="post" asp-action="ConfirmBooking" asp-area="Customer" asp-controller="Booking">
+                    @await Html.PartialAsync("SelectedRoom", Model.Room)
+                    @await Html.PartialAsync("PersonalInfo", Model)
+                    @await Html.PartialAsync("PaymentInfo", Model)
+                    @await Html.PartialAsync("ReviewBook", Model)
+                </form>
 
             </div>
         </div>

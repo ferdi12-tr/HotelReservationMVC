@@ -1,0 +1,186 @@
+﻿@model BookModelView
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="panel panel-primary setup-content" id="step-3">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-8 col-md-12 col-xs-12">
+                <h3 class="booking-heading-2 black-color">Billing Address</h3>
+                <div class="contact-form">
+                    <div class="sidebar-widget">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group firstname">
+                                    <label for="inputfirstname2" class="form-label">First Name</label>
+                                    <input asp-for="FirstName" type="text" name="first-name" class="form-control" id="inputfirstname2" placeholder="First Name">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group lastname">
+                                    <label for="inputlastname2" class="form-label">Last Name</label>
+                                    <input asp-for="LastName" type="text" name="last-name" class="form-control" id="inputlastname2" placeholder="Last Name">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group address-line-1">
+                                    <label for="inputaddress-line3" class="form-label">Address Line 1</label>
+                                    <input type="text" name="address-line1" class="form-control" id="inputaddress-line3" placeholder="Address Line 1">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group address-line-2">
+                                    <label for="inputaddress-line4" class="form-label">Address Line 2</label>
+                                    <input type="text" name="address-line2" class="form-control" id="inputaddress-line4" placeholder="Address Line 2">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group address-line-2">
+                                    <label for="inputcity2" class="form-label">City</label>
+                                    <input type="text" name="city" class="form-control" id="inputcity2" placeholder="City">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group address-line-2">
+                                    <label for="inputcode2" class="form-label">Zip/Post Code</label>
+                                    <input type="text" name="code" class="form-control" id="inputcode2" placeholder="Zip">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group address-line-2">
+                                    <label for="inputstate2" class="form-label">State/Region</label>
+                                    <input type="text" name="state" class="form-control" id="inputstate2" placeholder="State">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group country">
+                                    <label>Country</label>
+                                    <select class="selectpicker country search-fields" name="Country">
+                                        <option>county</option>
+                                        <option>United Kingdom</option>
+                                        <option>Canada</option>
+                                        <option>Australia</option>
+                                        <option>France</option>
+                                        <option>Spain</option>
+                                        <option>Brazil</option>
+                                        <option>Bhutan</option>
+                                        <option>Bangladesh</option>
+                                        <option>India</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar-widget sw-2">
+                        <h3 class="booking-heading-2">Card Info</h3>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group card-number">
+                                    <label for="inputcardnumber" class="form-label">Card Number</label>
+                                    <input type="text" name="card-number" class="form-control" id="inputcardnumber" placeholder="Card Number">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group CVV">
+                                    <label for="inputlastCVV" class="form-label">CVV</label>
+                                    <input type="text" name="last-name" class="form-control" id="inputlastCVV" placeholder="CVV">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group Country">
+                                    <label>Expire</label>
+                                    <select class="selectpicker country search-fields" name="Country">
+                                        <option>Month</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="form-group Country">
+                                    <label>Year</label>
+                                    <select class="selectpicker country search-fields" name="Country">
+                                        <option>2021</option>
+                                        <option>2016</option>
+                                        <option>2015</option>
+                                        <option>2014</option>
+                                        <option>2013</option>
+                                        <option>2012</option>
+                                        <option>2011</option>
+                                        <option>2010</option>
+                                        <option>2009</option>
+                                        <option>2008</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-xs-12">
+                <h3 class="booking-heading-2">Booking Details</h3>
+                <div class="booling-details-box">
+                    <div id="carouselExampleIndicators2" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="img/room/img-2.jpg" class="d-block w-100" alt="photo">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="img/room/img-5.jpg" class="d-block w-100" alt="photo">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="img/room/img-1.jpg" class="d-block w-100" alt="photo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info">
+                        <h4><a href="#">Double Room</a></h4>
+                        <ul>
+                            <li>
+                                <span>Check In:</span> october 28, 2021
+                            </li>
+                            <li>
+                                <span>Check Out:</span> october 29, 2021
+                            </li>
+                            <li>
+                                <span>Rooms:</span> 3
+                            </li>
+                            <li>
+                                <span>Adults:</span> 2
+                            </li>
+                            <li>
+                                <span>Child:</span> 1
+                            </li>
+                        </ul>
+                        <div class="your-address">
+                            <strong>Your Address:</strong>
+                            <address>
+                                <strong>John maikel</strong>
+                                <br><br>
+                                Level 13, 2 Elizabeth St, Melbourne
+                                Victoria 3000
+                            </address>
+                        </div>
+                        <div class="price">
+                            Total:$317.99
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn-md btn-theme btn-4 btn-7 nextBtn pull-left" type="button">Save and continue</button>
+    </div>
+</div>
