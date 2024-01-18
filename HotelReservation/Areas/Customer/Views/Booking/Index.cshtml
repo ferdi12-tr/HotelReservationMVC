@@ -1,8 +1,65 @@
-﻿
+﻿@model BookModelView
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Customer/Views/_Layout.cshtml";
 }
 
-<h1>Index</h1>
 
+<!-- Sub banner start -->
+<div class="sub-banner">
+    <div class="container">
+        <div class="breadcrumb-area">
+            <h1>Booking System</h1>
+        </div>
+        <nav class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Booking System</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Sub Banner end -->
+<!-- Booking flow start -->
+<div class="booking-flow content-area-6">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="stepwizard">
+                    <div class="stepwizard-row setup-panel">
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-1" class="btn btn-success btn-circle">
+                                <i class="fa fa-folder-o"></i>
+                            </a>
+                            <h3>Selected Room</h3>
+                        </div>
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-2" class="btn btn-default btn-circle">
+                                <i class="fa fa-user"></i>
+                            </a>
+                            <h3>Personal Info</h3>
+                        </div>
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-3" class="btn btn-default btn-circle">
+                                <i class="fa fa-cc"></i>
+                            </a>
+                            <h3>Payment Info</h3>
+                        </div>
+                        <div class="stepwizard-step col-xs-3">
+                            <a href="#step-4" class="btn btn-default btn-circle">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <h3>Review</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                @* <form> *@
+                @await Html.PartialAsync("SelectedRoom", Model.Room); 
+                @* </form> *@
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,95 @@
+﻿@model Room
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="panel panel-primary setup-content" id="step-1">
+    <div class="panel-body">
+        <div class="row">
+            <div class="hotel-box">
+                <!-- Photo thumbnail -->
+                <div class="photo-thumbnail">
+                    <div class="photo">
+                        <img src="~/@Model.ImgUrl1" alt="photo" class="img-fluid w-100">
+                        <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=1})">
+                            <span class="blog-one__plus"></span>
+                        </a>
+                    </div>
+                    <div class="pr">
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-full"></i>
+                        </div>
+                        $@Model.PricePerHour /Hour
+                    </div>
+                </div>
+                <!-- Detail -->
+                <div class="detail clearfix">
+                    <h3>
+                        <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=Model.Id})">
+                            @Model.RoomName
+                        </a>
+                    </h3>
+                    <p class="location">
+
+                        <i class="fa fa-map-marker"></i> @Model.Address
+
+                    </p>
+                    <div class="fecilities">
+                        <ul>
+
+                            <li>
+                                <i class="flaticon-bed"></i> Beds
+                            </li>
+
+                            @if (Model.HasAirConditioning)
+                            {
+                                <li>
+                                    <i class="flaticon-air-conditioning"></i>
+                                    AC
+                                </li>
+                            }
+
+                            @if (Model.HasTv)
+                            {
+                                <li>
+                                    <i class="flaticon-graph-line-screen"></i>
+                                    TV
+                                </li>
+                            }
+
+                            @if (Model.HasGym)
+                            {
+                                <li>
+                                    <i class="flaticon-weightlifting"></i>
+                                    GYM
+                                </li>
+                            }
+
+                            @if (Model.HasFreeWifi)
+                            {
+                                <li>
+                                    <i class="flaticon-wifi-connection-signal-symbol"></i>
+                                    Wi-fi
+                                </li>
+                            }
+
+                            @if (Model.HasParking)
+                            {
+                                <li>
+                                    <i class="flaticon-parking"></i>
+                                    Parking
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn-md btn-theme btn-4 btn-7 nextBtn pull-right" type="button">Save and continue</button>
+    </div>
+</div>
