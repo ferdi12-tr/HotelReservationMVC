@@ -4,6 +4,7 @@ using HotelReservation.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelReservation.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240118082503_room_image_amenity")]
+    partial class room_image_amenity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,14 +32,43 @@ namespace HotelReservation.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Address")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("PricePerHour")
+                        .HasColumnType("float");
+
+                    b.Property<int>("RoomAmenityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomImageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RoomName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tag")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomAmenityId");
+
+                    b.HasIndex("RoomImageId");
+
+                    b.ToTable("Room");
+                });
+
+            modelBuilder.Entity("HotelReservation.Areas.Customer.Models.RoomAmenity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Bethroom")
                         .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("HasAirConditioning")
                         .HasColumnType("bit");
@@ -72,6 +103,19 @@ namespace HotelReservation.Migrations
                     b.Property<bool>("HasTv")
                         .HasColumnType("bit");
 
+                    b.HasKey("Id");
+
+                    b.ToTable("RoomAmenity");
+                });
+
+            modelBuilder.Entity("HotelReservation.Areas.Customer.Models.RoomImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<string>("ImgUrl1")
                         .HasColumnType("nvarchar(max)");
 
@@ -87,18 +131,9 @@ namespace HotelReservation.Migrations
                     b.Property<string>("ImgUrl5")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("PricePerHour")
-                        .HasColumnType("float");
-
-                    b.Property<string>("RoomName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tag")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Room");
+                    b.ToTable("RoomImage");
                 });
 
             modelBuilder.Entity("HotelReservation.Models.AppRole", b =>
@@ -314,6 +349,25 @@ namespace HotelReservation.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("HotelReservation.Areas.Customer.Models.Room", b =>
+                {
+                    b.HasOne("HotelReservation.Areas.Customer.Models.RoomAmenity", "RoomAmenities")
+                        .WithMany("Rooms")
+                        .HasForeignKey("RoomAmenityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HotelReservation.Areas.Customer.Models.RoomImage", "RoomImages")
+                        .WithMany("Rooms")
+                        .HasForeignKey("RoomImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RoomAmenities");
+
+                    b.Navigation("RoomImages");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("HotelReservation.Models.AppRole", null)
@@ -363,6 +417,16 @@ namespace HotelReservation.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HotelReservation.Areas.Customer.Models.RoomAmenity", b =>
+                {
+                    b.Navigation("Rooms");
+                });
+
+            modelBuilder.Entity("HotelReservation.Areas.Customer.Models.RoomImage", b =>
+                {
+                    b.Navigation("Rooms");
                 });
 #pragma warning restore 612, 618
         }

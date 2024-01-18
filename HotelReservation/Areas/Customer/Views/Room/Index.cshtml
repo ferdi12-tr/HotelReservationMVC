@@ -1,8 +1,9 @@
-﻿@model int
+﻿@model IEnumerable<Room>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Customer/Views/_Layout.cshtml";
 }
+
 
 <!-- Sub banner start -->
 <div class="sub-banner">
@@ -24,252 +25,94 @@
 <div class="content-area rooms-section">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <div class="hotel-box">
-                    <!-- Photo thumbnail -->
-                    <div class="photo-thumbnail">
-                        <div class="photo">
-                            <img src="~/img/room/img-1.jpg" alt="photo" class="img-fluid w-100">
-                            <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=1})">
-                                <span class="blog-one__plus"></span>
-                            </a>
-                        </div>
-                        <div class="pr">
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half-full"></i>
-                            </div>
-                            $567.99/Night
-                        </div>
-                    </div>
-                    <!-- Detail -->
-                    <div class="detail clearfix">
-                        <h3>
-                            <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=1})">
-                                Luxury Room
-                            </a>
-                        </h3>
-                        <p class="location">
-                            
-                                <i class="fa fa-map-marker"></i>123 Kathal St. Tampa City,
-                            
-                        </p>
-                        <div class="fecilities">
-                            <ul>
-                                <li>
-                                    <i class="flaticon-bed"></i> Beds
-                                </li>
-                                <li>
-                                    <i class="flaticon-air-conditioning"></i>
-                                    AC
-                                </li>
-                                <li>
-                                    <i class="flaticon-graph-line-screen"></i>
-                                    TV
-                                </li>
-                                <li>
-                                    <i class="flaticon-weightlifting"></i>
-                                    GYM
-                                </li>
-                                <li>
-                                    <i class="flaticon-wifi-connection-signal-symbol"></i>
-                                    Wi-fi
-                                </li>
-                                <li>
-                                    <i class="flaticon-parking"></i>
-                                    Parking
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <div class="hotel-box">
-                    <!-- Photo thumbnail -->
-                    <div class="photo-thumbnail">
-                        <div class="photo">
-                            <img src="~/img/room/img-2.jpg" alt="phot" class="img-fluid w-100">
-                            <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=2})">
-                                <span class="blog-one__plus"></span>
-                            </a>
-                        </div>
-                        <div class="pr">
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half-full"></i>
-                            </div>
-                            $567.99/Night
-                        </div>
-                    </div>
-                    <!-- Detail -->
-                    <div class="detail clearfix">
-                        <h3>
-                            <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=1})">
-                                Double Room
+            @foreach (var room in Model)
+            {
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="hotel-box">
+                        <!-- Photo thumbnail -->
+                        <div class="photo-thumbnail">
+                            <div class="photo">
+                                <img src="~/@room.ImgUrl1" alt="photo" class="img-fluid w-100">
+                                <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=1})">
+                                    <span class="blog-one__plus"></span>
                                 </a>
-                        </h3>
-                        <p class="location">
-                                <i class="fa fa-map-marker"></i>123 Kathal St. Tampa City,
-                        </p>
-                        <div class="fecilities">
-                            <ul>
-                                <li>
-                                    <i class="flaticon-bed"></i> Beds
-                                </li>
-                                <li>
-                                    <i class="flaticon-air-conditioning"></i>
-                                    AC
-                                </li>
-                                <li>
-                                    <i class="flaticon-graph-line-screen"></i>
-                                    TV
-                                </li>
-                                <li>
-                                    <i class="flaticon-weightlifting"></i>
-                                    GYM
-                                </li>
-                                <li>
-                                    <i class="flaticon-wifi-connection-signal-symbol"></i>
-                                    Wi-fi
-                                </li>
-                                <li>
-                                    <i class="flaticon-parking"></i>
-                                    Parking
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <div class="hotel-box">
-                    <!-- Photo thumbnail -->
-                    <div class="photo-thumbnail">
-                        <div class="photo">
-                            <img src="~/img/room/img-3.jpg" alt="photo" class="img-fluid w-100">
-                            <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=3})">
-                                <span class="blog-one__plus"></span>
-                            </a>
-                        </div>
-                        <div class="pr">
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half-full"></i>
                             </div>
-                            $567.99/Night
-                        </div>
-                    </div>
-                    <!-- Detail -->
-                    <div class="detail clearfix">
-                        <h3>
-                            <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=3})">
-                                Family Room
-                            </a>
-                        </h3>
-                        <p class="location">
-                                <i class="fa fa-map-marker"></i>123 Kathal St. Tampa City,
-                        </p>
-                        <div class="fecilities">
-                            <ul>
-                                <li>
-                                    <i class="flaticon-bed"></i> Beds
-                                </li>
-                                <li>
-                                    <i class="flaticon-air-conditioning"></i>
-                                    AC
-                                </li>
-                                <li>
-                                    <i class="flaticon-graph-line-screen"></i>
-                                    TV
-                                </li>
-                                <li>
-                                    <i class="flaticon-weightlifting"></i>
-                                    GYM
-                                </li>
-                                <li>
-                                    <i class="flaticon-wifi-connection-signal-symbol"></i>
-                                    Wi-fi
-                                </li>
-                                <li>
-                                    <i class="flaticon-parking"></i>
-                                    Parking
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <div class="hotel-box">
-                    <!-- Photo thumbnail -->
-                    <div class="photo-thumbnail">
-                        <div class="photo">
-                            <img src="~/img/room/img-4.jpg" alt="photo" class="img-fluid w-100">
-                            <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=4})">
-                                <span class="blog-one__plus"></span>
-                            </a>
-                        </div>
-                        <div class="pr">
-                            <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half-full"></i>
+                            <div class="pr">
+                                <div class="rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-half-full"></i>
+                                </div>
+                                $@room.PricePerHour /Hour
                             </div>
-                            $567.99/Night
                         </div>
-                    </div>
-                    <!-- Detail -->
-                    <div class="detail clearfix">
-                        <h3>
-                            <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=4})">
-                                Single Room 
+                        <!-- Detail -->
+                        <div class="detail clearfix">
+                            <h3>
+                                <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=room.Id})">
+                                    @room.RoomName
                                 </a>
-                        </h3>
-                        <p class="location">
-                                <i class="fa fa-map-marker"></i>123 Kathal St. Tampa City,
-                        </p>
-                        <div class="fecilities">
-                            <ul>
-                                <li>
-                                    <i class="flaticon-bed"></i> Beds
-                                </li>
-                                <li>
-                                    <i class="flaticon-air-conditioning"></i>
-                                    AC
-                                </li>
-                                <li>
-                                    <i class="flaticon-graph-line-screen"></i>
-                                    TV
-                                </li>
-                                <li>
-                                    <i class="flaticon-weightlifting"></i>
-                                    GYM
-                                </li>
-                                <li>
-                                    <i class="flaticon-wifi-connection-signal-symbol"></i>
-                                    Wi-fi
-                                </li>
-                                <li>
-                                    <i class="flaticon-parking"></i>
-                                    Parking
-                                </li>
-                            </ul>
+                            </h3>
+                            <p class="location">
+
+                                <i class="fa fa-map-marker"></i> @room.Address
+
+                            </p>
+                            <div class="fecilities">
+                                <ul>
+
+                                    <li>
+                                        <i class="flaticon-bed"></i> Beds
+                                    </li>
+
+                                    @if (room.HasAirConditioning)
+                                    {
+                                        <li>
+                                            <i class="flaticon-air-conditioning"></i>
+                                            AC
+                                        </li>
+                                    }
+
+                                    @if (room.HasTv)
+                                    {
+                                        <li>
+                                            <i class="flaticon-graph-line-screen"></i>
+                                            TV
+                                        </li>
+                                    }
+
+                                    @if (room.HasGym)
+                                    {
+                                        <li>
+                                            <i class="flaticon-weightlifting"></i>
+                                            GYM
+                                        </li>
+                                    }
+
+                                    @if (room.HasFreeWifi)
+                                    {
+                                        <li>
+                                            <i class="flaticon-wifi-connection-signal-symbol"></i>
+                                            Wi-fi
+                                        </li>
+                                    }
+
+                                    @if (room.HasParking)
+                                    {
+                                        <li>
+                                            <i class="flaticon-parking"></i>
+                                            Parking
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </div>

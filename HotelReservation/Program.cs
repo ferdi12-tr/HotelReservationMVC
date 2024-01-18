@@ -1,5 +1,7 @@
 using HotelReservation.Data;
 using HotelReservation.Models;
+using HotelReservation.Services;
+using HotelReservation.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +17,9 @@ namespace HotelReservation
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(connectionString));
+
+            //Custom Services
+            builder.Services.AddTransient<IRoomService, RoomService>();
 
             //Identity
             builder.Services.AddIdentity<AppUser, AppRole>()
