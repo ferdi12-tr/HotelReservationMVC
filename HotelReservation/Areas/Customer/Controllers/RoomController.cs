@@ -1,4 +1,5 @@
-﻿using HotelReservation.Services.Interfaces;
+﻿using HotelReservation.Areas.Customer.Models;
+using HotelReservation.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelReservation.Areas.Customer.Controllers
@@ -29,9 +30,20 @@ namespace HotelReservation.Areas.Customer.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult RoomDetails(int roomId) 
-        { 
-            return View(roomId);
+        public async Task<IActionResult> RoomDetails(int roomId) 
+        {
+            try
+            {
+                var room = await roomService.GetRoomByIdAsync(roomId);
+                var bookModelView = new BookModelView();
+                bookModelView.Room = room;
+                return View(bookModelView);
+            }
+            catch (Exception e)
+            {
+                logger.LogError($"RoomController ----- RoomDetails ----- {e.Message}");
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

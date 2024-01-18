@@ -1,10 +1,9 @@
-﻿@model int
+﻿@model BookModelView
 @{
     ViewData["Title"] = "RoomDetails";
     Layout = "~/Areas/Customer/Views/_Layout.cshtml";
 }
 
-<h1>@Model RoomDetails</h1>
 
 <!-- Rooms banner start -->
 <div class="rooms-banner">
@@ -12,22 +11,22 @@
         <div class="featured-slider row slide-box-btn slider" data-slick='{"slidesToShow": 3, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": 2}}, {"breakpoint": 768,"settings":{"slidesToShow": 1}}]}'>
             <div class="slide slide-box">
                 <div class="banner-img">
-                    <img src="~/img/room/img-1.jpg" alt="banner" class="img-fluid bp">
+                    <img src="~/@Model.Room?.ImgUrl1" alt="banner" class="img-fluid bp">
                 </div>
             </div>
             <div class="slide slide-box">
                 <div class="banner-img">
-                    <img src="~/img/room/img-2.jpg" alt="banner" class="img-fluid bp">
+                    <img src="~/@Model.Room?.ImgUrl2" alt="banner" class="img-fluid bp">
                 </div>
             </div>
             <div class="slide slide-box">
                 <div class="banner-img">
-                    <img src="~/img/room/img-3.jpg" alt="banner" class="img-fluid bp">
+                    <img src="~/@Model.Room?.ImgUrl3" alt="banner" class="img-fluid bp">
                 </div>
             </div>
             <div class="slide slide-box">
                 <div class="banner-img">
-                    <img src="~/img/room/img-4.jpg" alt="banner" class="img-fluid bp">
+                    <img src="~/@Model.Room?.ImgUrl4" alt="banner" class="img-fluid bp">
                 </div>
             </div>
         </div>
@@ -44,41 +43,62 @@
                 <div class="col-xl-3 col-lg-4 col-md-4">
                     <div class="photo">
                         <div class="home">
-                            <img class="img-fluid" src="~/img/room-info.png" alt="image">
+                            <img class="img-fluid" src="~/@Model.Room?.ImgUrl1" alt="image">
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-9 col-lg-8 col-md-8 align-self-center">
                     <div class="content">
                         <div class="for-sale">For Sale</div>
-                        <h2><a href="#">Super Deluxe Room</a> <span class="pull-right">$299,00<small>/mo</small></span></h2>
+                        <h2><a href="#">@Model.Room?.RoomName</a> <span class="pull-right">$@Model.Room?.PricePerHour<small>/Ho</small></span></h2>
                         <ul class="facilities-list clearfix">
+
                             <li>
                                 <i class="flaticon-bed"></i> Beds
                             </li>
-                            <li>
-                                <i class="flaticon-air-conditioning"></i>
-                                AC
-                            </li>
-                            <li>
-                                <i class="flaticon-graph-line-screen"></i>
-                                TV
-                            </li>
-                            <li>
-                                <i class="flaticon-weightlifting"></i>
-                                GYM
-                            </li>
-                            <li>
-                                <i class="flaticon-wifi-connection-signal-symbol"></i>
-                                Wi-fi
-                            </li>
-                            <li>
-                                <i class="flaticon-parking"></i>
-                                Parking
-                            </li>
+
+                            @if (Model.Room.HasAirConditioning)
+                            {
+                                <li>
+                                    <i class="flaticon-air-conditioning"></i>
+                                    AC
+                                </li>
+                            }
+
+                            @if (Model.Room.HasTv)
+                            {
+                                <li>
+                                    <i class="flaticon-graph-line-screen"></i>
+                                    TV
+                                </li>
+                            }
+
+                            @if (Model.Room.HasGym)
+                            {
+                                <li>
+                                    <i class="flaticon-weightlifting"></i>
+                                    GYM
+                                </li>
+                            }
+
+                            @if (Model.Room.HasFreeWifi)
+                            {
+                                <li>
+                                    <i class="flaticon-wifi-connection-signal-symbol"></i>
+                                    Wi-fi
+                                </li>
+                            }
+
+                            @if (Model.Room.HasParking)
+                            {
+                                <li>
+                                    <i class="flaticon-parking"></i>
+                                    Parking
+                                </li>
+                            }
                         </ul>
 
-                        <p><i class="fa fa-map-marker"></i> 123 Kathal St. Tampa City,</p>
+                        <p><i class="fa fa-map-marker"></i> @Model.Room?.Address</p>
                     </div>
                 </div>
             </div>
@@ -100,98 +120,9 @@
                         <!-- Title -->
                         <h3>Rooms Description</h3>
                         <!-- paragraph -->
-                        <p class="mb-0">Lorem ipsum dolor sit amet, conser adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a conser nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra a. Aliquam pellentesque nibh et nibh feugiat gravida. Maecenas ultricies, diam vitae semper placerat, velit risus accumsan nisl, eget tempor lacus est vel nunc. Proin accumsan elit sed neque euismod fringilla. Curabitur lobortis nunc velit,</p>
+                        <p class="mb-0">@Model.Room?.Description</p>
                     </div>
                     <!-- Rooms description end -->
-                    <!-- Amenities start -->
-                    <div class="amenities mb-30">
-                        <h3>Amenities</h3>
-                        <div class="row">
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <ul class="condition">
-                                    <li>
-                                        <i class="flaticon-air-conditioning"></i>Air conditioning
-                                    </li>
-                                    <li>
-                                        <i class="flaticon-balcony-and-door"></i>Balcony
-                                    </li>
-                                    <li>
-                                        <i class="flaticon-weightlifting"></i>Gym
-                                    </li>
-                                    <li>
-                                        <i class="flaticon-parking"></i>Parking
-                                    </li>
-                                    <li>
-                                        <i class="flaticon-sunbed"></i>Beach View
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <ul class="condition">
-                                    <li>
-                                        <i class="flaticon-bed"></i>2 Bedroom
-                                    </li>
-                                    <li>
-                                        <i class="flaticon-person-learning-by-reading"></i>Free Newspaper
-                                    </li>
-                                    <li>
-                                        <i class="flaticon-swimming-silhouette"></i>Use of pool
-                                    </li>
-                                    <li>
-                                        <i class="flaticon-graph-line-screen"></i>TV
-                                    </li>
-                                    <li>
-                                        <i class="flaticon-no-smoking-sign"></i>No Smoking
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <ul class="condition">
-                                    <li>
-                                        <i class="flaticon-room-service"></i>Room Service
-                                    </li>
-                                    <li>
-                                        <i class="flaticon-breakfast"></i>Breakfast
-                                    </li>
-                                    <li>
-                                        <i class="flaticon-phone-receiver"></i>Telephone
-                                    </li>
-                                    <li>
-                                        <i class="flaticon-bed"></i>2 Bedroom
-                                    </li>
-                                    <li>
-                                        <i class="flaticon-wifi-connection-signal-symbol"></i>Free Wi-Fi
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Amenities end -->
-                    <!-- Extra service start  -->
-                    <div class="extra-service mb-50">
-                        <h3>Extra Service</h3>
-                        <div class="extra-service-item">
-                            <p class="tag-item-name">Air Conditioner </p>
-                            <div class="border-centar"></div>
-                            <div class="label-items-value"><span class="price">+24$</span>to price per person </div>
-                        </div>
-                        <div class="extra-service-item">
-                            <p class="tag-item-name">Free Internet </p>
-                            <div class="border-centar"></div>
-                            <div class="label-items-value"><span class="price">+14$</span>to price per person </div>
-                        </div>
-                        <div class="extra-service-item">
-                            <p class="tag-item-name">LCD Television </p>
-                            <div class="border-centar"></div>
-                            <div class="label-items-value"><span class="price">+15$</span>to price per person </div>
-                        </div>
-                        <div class="extra-service-item">
-                            <p class="tag-item-name">Microwave </p>
-                            <div class="border-centar"></div>
-                            <div class="label-items-value"><span class="price">+30$</span>to price per person </div>
-                        </div>
-                    </div>
-                    <!-- Extra service end -->
                     <!-- House reles start -->
                     <div class="house-rules mb-50">
                         <h3>House Rules</h3>
@@ -222,13 +153,13 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>$250</td>
-                                    <td>$250</td>
-                                    <td>$250</td>
-                                    <td>$250</td>
-                                    <td>$250</td>
-                                    <td>$250</td>
-                                    <td>$250</td>
+                                    <td>$@Model.Room?.PricePerHour</td>
+                                    <td>$@Model.Room?.PricePerHour</td>
+                                    <td>$@Model.Room?.PricePerHour</td>
+                                    <td>$@Model.Room?.PricePerHour</td>
+                                    <td>$@Model.Room?.PricePerHour</td>
+                                    <td>$@Model.Room?.PricePerHour</td>
+                                    <td>$@Model.Room?.PricePerHour</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -381,24 +312,32 @@
             <div class="col-lg-4 col-md-12 col-sm-12">
                 <!-- Sidebar start -->
                 <div class="sidebar">
-                    <!-- Search area box 3 start -->
                     <div class="sidebar-widget search-area-box-3 clearfix">
                         <h3>Check Availability</h3>
-                        <h4 class="price">$260/Night</h4>
+                        <h4 class="price">$@Model.Room?.PricePerHour/Hour</h4>
                         <div class="search-contents">
-                            <form method="GET">
+
+
+                            <form method="post" asp-action="SelectedRoom" asp-area="Customer" , asp-controller="Booking">
                                 <div class="search-your-details">
                                     <div class="row">
+                                        
                                         <div class="col-md-12 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="btn-default datepicker" placeholder="Check In">
+                                                <input asp-for="CheckInDate" class="btn-default datepicker" type="text" placeholder="Check In Date">
                                             </div>
                                         </div>
+                                        
                                         <div class="col-md-12 col-sm-6">
                                             <div class="form-group">
-                                                <input type="text" class="btn-default datepicker" placeholder="Check Out">
+                                                <input asp-for="CheckOutDate" class="btn-default datepicker" type="text" placeholder="Check Out Date">
                                             </div>
                                         </div>
+                                        
+                                        <div class="form-group">
+                                            <input asp-for="SelectedRoomId" value=@Model.Room?.Id type="hidden" />
+                                        </div>
+                                        
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
                                                 <select class="selectpicker search-fields" name="room">
@@ -409,6 +348,7 @@
                                                 </select>
                                             </div>
                                         </div>
+
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
                                                 <select class="selectpicker search-fields" name="beds">
@@ -421,6 +361,7 @@
                                                 </select>
                                             </div>
                                         </div>
+
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
                                                 <select class="selectpicker search-fields" name="adults">
@@ -433,6 +374,7 @@
                                                 </select>
                                             </div>
                                         </div>
+
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
                                                 <select class="selectpicker search-fields" name="children">
@@ -445,11 +387,13 @@
                                                 </select>
                                             </div>
                                         </div>
+
                                         <div class="col-md-12 col-sm-12">
                                             <div class="form-group mb-0">
                                                 <button type="submit" class="btn-md btn-theme btn-4 btn-7 w-100">Book Now</button>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </form>
