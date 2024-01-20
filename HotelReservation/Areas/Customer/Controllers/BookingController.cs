@@ -32,30 +32,10 @@ namespace HotelReservation.Areas.Customer.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult SelectedRoom(Room selectedRoom) // partial view with room model
-        {
-            return View(selectedRoom);
-        }
-
-        public IActionResult PersonalInfo(BookModelView model) // To display booked room and dates
-        {
-            return View(model);
-        }
-
-        public IActionResult PaymentInfo(BookModelView model)
-        {
-            return View(model);
-        }
-
-        public IActionResult ReviewBook(BookModelView model)
-        {
-            return View(model);
-        }
-
         [HttpPost]
         public IActionResult ConfirmBooking(BookModelView modelView)
         {
-            return RedirectToAction("Index", "Home");
+            return View(modelView);
         }
     }
 }

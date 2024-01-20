@@ -8,8 +8,34 @@
         public string? CheckOutDate { get; set; }
 
         #region PaymentInfo
-        public string? FirstName;
-        public string? LastName;
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? AddressLine1 { get; set; }
+        public string? AddressLine2 { get; set; }
+        public string? City { get; set; }
+        public string? ZipCode { get; set; }
+        public string? State { get; set; }
         #endregion
+
+        #region BillingInfo
+        public bool IsBillingSame { get; set; }
+        public string? BillingFirstName { get; set; }
+        public string? BillingLastName { get; set; }
+        public string? BillingAddressLine1 { get; set; }
+        public string? BillingAddressLine2 { get; set; }
+        public string? BillingCity { get; set; }
+        public string? BillingZipCode { get; set; }
+        public string? BillingState { get; set; }
+        public string? BillingCountry { get; set; }
+        #endregion
+
+        #region CardInfo
+        public string? CardNumber { get; set; }
+        public string? InputLastCVV { get; set; }
+        public string? ExpireMonth { get; set; }
+        public string? ExpireYear { get; set; }
+        public string? PaymentId { get; set; }
+        #endregion
+
     }
 }
