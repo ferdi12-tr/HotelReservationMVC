@@ -200,28 +200,21 @@
 													</div>
 												</div>
 												<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+													<div class="form-group country">
+														<label>Country</label>
+														<select class="selectpicker country search-fields" asp-for="Country">
+															<option value="">County</option>
+															<option value="Türkiye">Türkiye</option>
+															<option value="Germany">Germany</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 													<div class="form-group address-line-2">
 														<label for="inputstate" class="form-label">State/Region</label>
 														<input asp-for="State" type="text" class="form-control" id="inputstate" placeholder="State">
 													</div>
 												</div>
-												@* <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-												<div class="form-group country">
-												<label>Country</label>
-												<select class="selectpicker country search-fields" name="Country">
-												<option>county</option>
-												<option>United Kingdom</option>
-												<option>Canada</option>
-												<option>Australia</option>
-												<option>France</option>
-												<option>Spain</option>
-												<option>Brazil</option>
-												<option>Bhutan</option>
-												<option>Bangladesh</option>
-												<option>India</option>
-												</select>
-												</div>
-												</div> *@
 											</div>
 										</div>
 									</div>
@@ -287,12 +280,6 @@
 									<h3 class="booking-heading-2 black-color">Billing Address</h3>
 									<div class="contact-form">
 										<div class="sidebar-widget">
-											<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-												<div class="form-group">
-													<input asp-for="IsBillingSame" value="true" type="checkbox" id="billing-same">
-													<label for="billing-same" class="form-label">My Billing Address Is Same</label>
-												</div>
-											</div>
 											<div class="row">
 												<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 													<div class="form-group firstname">
@@ -344,38 +331,6 @@
 															<option value="Türkiye">Türkiye</option>
 															<option value="Germany">Germany</option>
 														</select>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="sidebar-widget sw-2">
-											<h3 class="booking-heading-2">Card Info</h3>
-											<div class="row">
-
-												<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-													<div class="form-group card-number">
-														<label for="inputcardnumber" class="form-label">Card Number</label>
-														<input asp-for="CardNumber" type="text" class="form-control" id="inputcardnumber" placeholder="Card Number">
-													</div>
-												</div>
-
-												<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-													<div class="form-group CVV">
-														<label for="inputlastCVV" class="form-label">CVV</label>
-														<input asp-for="InputLastCVV" type="text" class="form-control" id="inputlastCVV" placeholder="CVV">
-													</div>
-												</div>
-
-												<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-													<div class="form-group Country">
-														<label for="expire-month" class="form-label">Expire Month</label>
-														<input asp-for="ExpireMonth" type="text" class="form-control" id="expire-month" placeholder="Month"/>
-													</div>
-												</div>
-												<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-													<div class="form-group Country">
-														<label for="expire-year" class="form-label">Expire Year</label>
-														<input asp-for="ExpireYear" type="text" class="form-control" id="expire-year" placeholder="Year" />
 													</div>
 												</div>
 											</div>
