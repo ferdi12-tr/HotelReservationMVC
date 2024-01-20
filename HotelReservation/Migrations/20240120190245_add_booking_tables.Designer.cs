@@ -4,6 +4,7 @@ using HotelReservation.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelReservation.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240120190245_add_booking_tables")]
+    partial class add_booking_tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,6 +31,9 @@ namespace HotelReservation.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("BillingAddressLine1")
                         .HasColumnType("nvarchar(max)");
@@ -54,7 +59,12 @@ namespace HotelReservation.Migrations
                     b.Property<string>("BillingZipCode")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("BillingInfo");
                 });
@@ -67,22 +77,33 @@ namespace HotelReservation.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("AppUserId")
+                        .HasColumnType("int");
+
                     b.Property<int>("BillingInfoId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CheckInDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("BookedRoomId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("CheckOutDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("BookedUser")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CheckInDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CheckOutDate")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PaymentInfoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoomId")
+                    b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("BillingInfoId");
 
@@ -91,29 +112,6 @@ namespace HotelReservation.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("BookingInfo");
-                });
-
-            modelBuilder.Entity("HotelReservation.Areas.Customer.Models.BookingInfoUserRelation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AppUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BookingInfoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("BookingInfoId");
-
-                    b.ToTable("BookingInfoUserRelation");
                 });
 
             modelBuilder.Entity("HotelReservation.Areas.Customer.Models.PaymentInfo", b =>
@@ -128,6 +126,12 @@ namespace HotelReservation.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AddressLine2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BookingId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
@@ -145,13 +149,15 @@ namespace HotelReservation.Migrations
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TransactionId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ZipCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("PaymentInfo");
                 });
@@ -448,8 +454,21 @@ namespace HotelReservation.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("HotelReservation.Areas.Customer.Models.BillingInfo", b =>
+                {
+                    b.HasOne("HotelReservation.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("HotelReservation.Areas.Customer.Models.BookingInfo", b =>
                 {
+                    b.HasOne("HotelReservation.Models.AppUser", "AppUser")
+                        .WithMany("BookingInfos")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("HotelReservation.Areas.Customer.Models.BillingInfo", "BillingInfo")
                         .WithMany("BookingInfos")
                         .HasForeignKey("BillingInfoId")
@@ -464,9 +483,9 @@ namespace HotelReservation.Migrations
 
                     b.HasOne("HotelReservation.Areas.Customer.Models.Room", "Room")
                         .WithMany("BookingInfos")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoomId");
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("BillingInfo");
 
@@ -475,23 +494,15 @@ namespace HotelReservation.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("HotelReservation.Areas.Customer.Models.BookingInfoUserRelation", b =>
+            modelBuilder.Entity("HotelReservation.Areas.Customer.Models.PaymentInfo", b =>
                 {
                     b.HasOne("HotelReservation.Models.AppUser", "AppUser")
-                        .WithMany("BookingInfoUserRelations")
+                        .WithMany()
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HotelReservation.Areas.Customer.Models.BookingInfo", "BookingInfo")
-                        .WithMany("BookingInfoUserRelations")
-                        .HasForeignKey("BookingInfoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("AppUser");
-
-                    b.Navigation("BookingInfo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -550,11 +561,6 @@ namespace HotelReservation.Migrations
                     b.Navigation("BookingInfos");
                 });
 
-            modelBuilder.Entity("HotelReservation.Areas.Customer.Models.BookingInfo", b =>
-                {
-                    b.Navigation("BookingInfoUserRelations");
-                });
-
             modelBuilder.Entity("HotelReservation.Areas.Customer.Models.PaymentInfo", b =>
                 {
                     b.Navigation("BookingInfos");
@@ -567,7 +573,7 @@ namespace HotelReservation.Migrations
 
             modelBuilder.Entity("HotelReservation.Models.AppUser", b =>
                 {
-                    b.Navigation("BookingInfoUserRelations");
+                    b.Navigation("BookingInfos");
                 });
 #pragma warning restore 612, 618
         }

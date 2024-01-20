@@ -8,7 +8,7 @@
         public string? CheckOutDate { get; set; }
 
         #region PaymentInfo
-        public string? PaymentId { get; set; }
+        public string? TransactionId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? AddressLine1 { get; set; }

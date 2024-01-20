@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using HotelReservation.Areas.Customer.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace HotelReservation.Models
 {
@@ -8,5 +9,6 @@ namespace HotelReservation.Models
         public string? Surname { get; set; }
         public string? ImageUrl { get; set; }
         public int EmailConfirmCode { get; set; }
+        public List<BookingInfoUserRelation>? BookingInfoUserRelations { get; set; }
     }
 }

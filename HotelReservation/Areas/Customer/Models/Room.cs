@@ -1,4 +1,6 @@
-﻿namespace HotelReservation.Areas.Customer.Models
+﻿using System.Security.Principal;
+
+namespace HotelReservation.Areas.Customer.Models
 {
     public class Room
     {
@@ -8,6 +10,7 @@
         public double PricePerHour { get; set; }
         public string? Tag { get; set; }
         public string? Address { get; set; }
+        public List<BookingInfo>? BookingInfos { get; set; }
 
         #region Image
         public string? ImgUrl1 { get; set; }
