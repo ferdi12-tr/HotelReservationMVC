@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Iyzipay;
 using Iyzipay.Model;
 using Iyzipay.Request;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotelReservation.Areas.Customer.Controllers
 {
     [Area("Customer")]
+    [Authorize]
     public class BookingController : Controller
     {
         private readonly IRoomService roomService;

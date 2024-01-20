@@ -35,5 +35,11 @@ namespace HotelReservation.Controllers
 			}
 			return View();
 		}
+
+		public IActionResult LogOut()
+		{
+			signInManager.SignOutAsync();
+			return RedirectToAction("Index", "Home");
+		}
 	}
 }
