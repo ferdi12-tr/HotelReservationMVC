@@ -16,6 +16,7 @@ namespace HotelReservation.Data
         public DbSet<CustomerInfo> CustomerInfo { get; set; }
         public DbSet<BillingInfo> BillingInfo { get; set; }
         public DbSet<BookingInfo> BookingInfo { get; set; }
+        public DbSet<BookingInfoUserRelation> BookingInfoUserRelation { get; set;}
 
 
 	}

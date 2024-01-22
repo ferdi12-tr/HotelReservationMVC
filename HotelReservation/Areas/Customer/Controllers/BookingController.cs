@@ -7,6 +7,7 @@ using Iyzipay.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using HotelReservation.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace HotelReservation.Areas.Customer.Controllers
 {
@@ -18,18 +19,30 @@ namespace HotelReservation.Areas.Customer.Controllers
 		private readonly ICustomerService customerService;
 		private readonly ILogger logger;
 		private readonly Utils.Utils utils;
+		private readonly UserManager<AppUser> userManager;
+		private readonly IBookingService bookingService;
 
 		public BookingController(
 			IRoomService roomService,
 			ILogger<BookingController> logger,
 			ICustomerService customerService,
-			Utils.Utils utils
-			)
+			Utils.Utils utils,
+			UserManager<AppUser> userManager,
+			IBookingService bookingService
+		)
 		{
 			this.roomService = roomService;
 			this.logger = logger;
 			this.customerService = customerService;
 			this.utils = utils;
+			this.userManager = userManager;
+			this.bookingService = bookingService;
+		}
+
+		[NonAction] // only post method must reach index action
+		public IActionResult Index()
+		{
+			return View();
 		}
 
 		[HttpPost]
@@ -54,28 +67,29 @@ namespace HotelReservation.Areas.Customer.Controllers
 			try
 			{
 				// customer db process
+				int customerInfoId;
+				int billingInfoId;
 				var customerInfo = utils.FillCustomerInfo(bookingModel);
 				var cresult = await customerService.GetCustomerInfoByUserNameAsync(bookingModel.UserName);
 				if (cresult == null)
-				{
-					await customerService.AddCustomerInfoAsync(customerInfo);
-				}
+					customerInfoId = await customerService.AddCustomerInfoAsync(customerInfo);
 				else
-				{
-					await customerService.UpdateCustomerInfoAsync(customerInfo);
-				}
+					customerInfoId = await customerService.UpdateCustomerInfoAsync(customerInfo);
+				
 
 				// billing db process
 				var billingInfo = utils.FillBillingInfo(bookingModel);
 				var bresult = await customerService.GetBillingInfoByUserNameAsync(bookingModel.UserName);
 				if (bresult == null)
-				{
-					await customerService.AddBillingInfoAsync(billingInfo);
-				}
+					billingInfoId = await customerService.AddBillingInfoAsync(billingInfo);
 				else
-				{
-					await customerService.UpdateBillingInfoAsync(billingInfo);
-				}
+					billingInfoId = await customerService.UpdateBillingInfoAsync(billingInfo);
+
+				//booking info db process
+				var bookingInfo = utils.FillBookingInfo(bookingModel, customerInfoId, billingInfoId);
+				var user = await userManager.FindByNameAsync(bookingModel.UserName);
+				await bookingService.AddBookingInfoAsyc(bookingInfo, user.Id);
+
 
 				return RedirectToAction("Payment", bookingModel);
 			}
@@ -153,7 +167,7 @@ namespace HotelReservation.Areas.Customer.Controllers
 			return View();
 		}
 
-		[AllowAnonymous]
+		[AllowAnonymous] // callback throw unauthorize without this attribute
 		public IActionResult PaymentCallback()
 		{
 			return View();

@@ -15,12 +15,13 @@ namespace HotelReservation.Services
 		}
 
 		#region CustomerInfo
-		public async Task AddCustomerInfoAsync(CustomerInfo customerInfo)
+		public async Task<int> AddCustomerInfoAsync(CustomerInfo customerInfo)
 		{
 			try
 			{
-				db.CustomerInfo.Add(customerInfo);
+				var result = db.CustomerInfo.Add(customerInfo);
 				await db.SaveChangesAsync();
+				return result.Entity.Id;
 			}
 			catch (Exception e)
 			{
@@ -84,12 +85,13 @@ namespace HotelReservation.Services
 			}
 		}
 
-		public async Task UpdateCustomerInfoAsync(CustomerInfo newCustomerInfo)
+		public async Task<int> UpdateCustomerInfoAsync(CustomerInfo newCustomerInfo)
 		{
 			try
 			{
-				db.CustomerInfo.Update(newCustomerInfo);
+				var result = db.CustomerInfo.Update(newCustomerInfo);
 				await db.SaveChangesAsync();
+				return result.Entity.Id;
 			}
 			catch (Exception e)
 			{
@@ -100,12 +102,13 @@ namespace HotelReservation.Services
 
 		#region BillingInfo
 
-		public async Task AddBillingInfoAsync(BillingInfo billingInfo)
+		public async Task<int> AddBillingInfoAsync(BillingInfo billingInfo)
 		{
 			try
 			{
-				db.BillingInfo.Add(billingInfo);
+				var result = db.BillingInfo.Add(billingInfo);
 				await db.SaveChangesAsync();
+				return result.Entity.Id;
 			}
 			catch (Exception e)
 			{
@@ -113,12 +116,13 @@ namespace HotelReservation.Services
 			}
 		}
 
-		public async Task UpdateBillingInfoAsync(BillingInfo newBillingInfo)
+		public async Task<int> UpdateBillingInfoAsync(BillingInfo newBillingInfo)
 		{
 			try
 			{
-				db.BillingInfo.Update(newBillingInfo);
+				var result = db.BillingInfo.Update(newBillingInfo);
 				await db.SaveChangesAsync();
+				return result.Entity.Id;
 			}
 			catch (Exception e)
 			{

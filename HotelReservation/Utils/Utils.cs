@@ -36,5 +36,19 @@ namespace HotelReservation.Utils
 				BillingZipCode = bookingModel.BillingZipCode,
 			};
 		}
+
+		public BookingInfo FillBookingInfo(BookModelView bookingModel, int customerInfoId, int billingInfoId)
+		{
+			return new BookingInfo
+			{
+				TransactionId = bookingModel.TransactionId,
+				IsPaid = false,
+				CheckInDate = DateTime.Parse(bookingModel.CheckInDate),
+				CheckOutDate = DateTime.Parse(bookingModel.CheckOutDate),
+				RoomId = bookingModel.SelectedRoomId,
+				CustomerInfoId = customerInfoId,
+				BillingInfoId = billingInfoId	
+			};
+		}
 	}
 }
