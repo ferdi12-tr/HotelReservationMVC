@@ -4,6 +4,7 @@ using HotelReservation.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelReservation.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240122180530_update_props_isPaid")]
+    partial class update_props_isPaid
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,11 +78,14 @@ namespace HotelReservation.Migrations
                     b.Property<DateTime>("CheckOutDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CustomerInfoId")
+                    b.Property<int?>("CustomerInfoId")
                         .HasColumnType("int");
 
                     b.Property<bool?>("IsPaid")
                         .HasColumnType("bit");
+
+                    b.Property<int>("PaymentInfoId")
+                        .HasColumnType("int");
 
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
@@ -149,9 +154,6 @@ namespace HotelReservation.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZipCode")
@@ -464,9 +466,7 @@ namespace HotelReservation.Migrations
 
                     b.HasOne("HotelReservation.Areas.Customer.Models.CustomerInfo", "CustomerInfo")
                         .WithMany("BookingInfos")
-                        .HasForeignKey("CustomerInfoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerInfoId");
 
                     b.HasOne("HotelReservation.Areas.Customer.Models.Room", "Room")
                         .WithMany("BookingInfos")

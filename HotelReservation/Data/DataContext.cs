@@ -13,7 +13,7 @@ namespace HotelReservation.Data
         {
         }
         public DbSet<Room> Room { get; set; }
-        public DbSet<PaymentInfo> PaymentInfo { get; set; }
+        public DbSet<CustomerInfo> CustomerInfo { get; set; }
         public DbSet<BillingInfo> BillingInfo { get; set; }
         public DbSet<BookingInfo> BookingInfo { get; set; }
 

@@ -468,6 +468,7 @@
 							<input asp-for="CheckInDate" value="@Model.CheckInDate" type="hidden" />
 							<input asp-for="CheckOutDate" value="@Model.CheckOutDate" type="hidden" />
 							<input asp-for="TransactionId" value=@paymentId.ToString() type="hidden" />
+							<input asp-for="UserName" value="@User.Identity.Name" type="hidden" />
 							<button class="btn-md btn-theme btn-4 btn-7 nextBtn pull-right" type="submit">confirm booking</button>
 						</div>
 					</div>

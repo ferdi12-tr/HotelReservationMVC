@@ -4,6 +4,7 @@ using HotelReservation.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelReservation.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240122184911_appuser_customerinfo")]
+    partial class appuser_customerinfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,11 +78,14 @@ namespace HotelReservation.Migrations
                     b.Property<DateTime>("CheckOutDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CustomerInfoId")
+                    b.Property<int?>("CustomerInfoId")
                         .HasColumnType("int");
 
                     b.Property<bool?>("IsPaid")
                         .HasColumnType("bit");
+
+                    b.Property<int>("PaymentInfoId")
+                        .HasColumnType("int");
 
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
@@ -136,6 +141,9 @@ namespace HotelReservation.Migrations
                     b.Property<string>("AddressLine2")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
@@ -151,13 +159,12 @@ namespace HotelReservation.Migrations
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ZipCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("CustomerInfo");
                 });
@@ -464,9 +471,7 @@ namespace HotelReservation.Migrations
 
                     b.HasOne("HotelReservation.Areas.Customer.Models.CustomerInfo", "CustomerInfo")
                         .WithMany("BookingInfos")
-                        .HasForeignKey("CustomerInfoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerInfoId");
 
                     b.HasOne("HotelReservation.Areas.Customer.Models.Room", "Room")
                         .WithMany("BookingInfos")
@@ -498,6 +503,17 @@ namespace HotelReservation.Migrations
                     b.Navigation("AppUser");
 
                     b.Navigation("BookingInfo");
+                });
+
+            modelBuilder.Entity("HotelReservation.Areas.Customer.Models.CustomerInfo", b =>
+                {
+                    b.HasOne("HotelReservation.Models.AppUser", "AppUser")
+                        .WithMany("CustomerInfos")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -574,6 +590,8 @@ namespace HotelReservation.Migrations
             modelBuilder.Entity("HotelReservation.Models.AppUser", b =>
                 {
                     b.Navigation("BookingInfoUserRelations");
+
+                    b.Navigation("CustomerInfos");
                 });
 #pragma warning restore 612, 618
         }

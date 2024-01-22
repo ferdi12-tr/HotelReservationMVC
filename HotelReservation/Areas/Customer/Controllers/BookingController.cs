@@ -5,6 +5,8 @@ using Iyzipay;
 using Iyzipay.Model;
 using Iyzipay.Request;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using HotelReservation.Models;
 
 namespace HotelReservation.Areas.Customer.Controllers
 {
@@ -13,12 +15,14 @@ namespace HotelReservation.Areas.Customer.Controllers
     public class BookingController : Controller
     {
         private readonly IRoomService roomService;
+        private readonly ICustomerService customerService;
         private readonly ILogger logger;
 
-        public BookingController(IRoomService roomService, ILogger<BookingController> logger)
+        public BookingController(IRoomService roomService, ILogger<BookingController> logger, ICustomerService customerService)
         {
             this.roomService = roomService;
             this.logger = logger;
+            this.customerService = customerService;
         }
 
         [HttpPost]
@@ -38,10 +42,40 @@ namespace HotelReservation.Areas.Customer.Controllers
         }
 
         [HttpPost]
-        public IActionResult ConfirmBooking(BookModelView bookingModel)
+        public async Task<IActionResult> ConfirmBooking(BookModelView bookingModel)
         {
-            //TODO  do database operations
-            return RedirectToAction("Payment", bookingModel);
+            try
+            {
+                var customerInfo = new CustomerInfo
+                {
+                    FirstName = bookingModel.FirstName,
+                    LastName = bookingModel.LastName,
+                    UserName = bookingModel.UserName,
+                    AddressLine1 = bookingModel.AddressLine1,
+                    AddressLine2 = bookingModel.AddressLine2,
+                    City = bookingModel.City,
+                    ZipCode = bookingModel.ZipCode,
+                    Country = bookingModel.Country,
+                    State = bookingModel.State
+                };
+                
+                var result = await customerService.GetCustomerInfoByUserNameAsync(customerInfo.UserName);
+                if (result == null)
+                {
+                    await customerService.AddCustomerInfoAsync(customerInfo);
+                }
+                else
+                {
+					await customerService.UpdateCustomerInfoAsync(customerInfo);
+				}
+
+				return RedirectToAction("Payment", bookingModel);
+			}
+            catch (Exception e)
+            {
+				logger.LogError($"BookingController ----- ConfirmBooking ----- {e.Message}");
+			}
+            return RedirectToAction("ErrorPage", "Home");
         }
 
         public async Task<IActionResult> Payment(BookModelView bookingModel)
