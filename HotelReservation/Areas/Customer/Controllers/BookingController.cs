@@ -117,7 +117,7 @@ namespace HotelReservation.Areas.Customer.Controllers
 			request.Currency = Currency.TRY.ToString();
 			request.BasketId = "B67832";
 			request.PaymentGroup = PaymentGroup.PRODUCT.ToString();
-			request.CallbackUrl = "https://localhost:7140/Booking/PaymentCallback?Area=Customer"; /// Geri Dönüş Urlsi
+			request.CallbackUrl = $"https://localhost:7140/Booking/PaymentCallback?Area=Customer/&transcationId={bookingModel.TransactionId}"; 
 
 
 			Buyer buyer = new Buyer();
@@ -168,9 +168,13 @@ namespace HotelReservation.Areas.Customer.Controllers
 		}
 
 		[AllowAnonymous] // callback throw unauthorize without this attribute
-		public IActionResult PaymentCallback()
+		public IActionResult PaymentCallback(int transcationId = 0) // get transactionId to display to customer
 		{
-			return View();
+			if (transcationId == 0)
+			{
+				return RedirectToAction("ErrorPage", "Home");
+			}
+			return View(transcationId);
 		}
 	}
 }

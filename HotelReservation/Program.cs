@@ -66,7 +66,12 @@ namespace HotelReservation
                 areaName: "Customer",
                 pattern: "{controller=Room}/{action=Index}/{id?}");
 
-            app.Run();
+			app.MapAreaControllerRoute(
+				name: "Customer",
+				areaName: "Customer",
+				pattern: "{controller=Booking}/{action=PaymentCallback}/{id?}");
+
+			app.Run();
         }
     }
 }

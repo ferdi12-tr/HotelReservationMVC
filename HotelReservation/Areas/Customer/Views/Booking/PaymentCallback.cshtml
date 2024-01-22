@@ -1,4 +1,4 @@
-﻿
+﻿@model int
 <html>
 <head>
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
@@ -13,6 +13,8 @@
         </div>
         <h1>Success</h1>
         <p>We received your purchase request.</p>
+        <hr />
+        <h3>Payment ID: <span class="text-danger">@Model</span></h3>
         <br />
         <a class="text-success" asp-action="Index" asp-controller="Home">Return To Home</a>
     </div>
