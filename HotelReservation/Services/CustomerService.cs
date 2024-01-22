@@ -14,6 +14,7 @@ namespace HotelReservation.Services
 			db = _db;
 		}
 
+		#region CustomerInfo
 		public async Task AddCustomerInfoAsync(CustomerInfo customerInfo)
 		{
 			try
@@ -32,7 +33,7 @@ namespace HotelReservation.Services
 			try
 			{
 				var customerInfos = await db.CustomerInfo.ToListAsync();
-				return customerInfos;	
+				return customerInfos;
 			}
 			catch (Exception e)
 			{
@@ -58,8 +59,8 @@ namespace HotelReservation.Services
 			try
 			{
 				var customerInfo = db.CustomerInfo
-									.FirstOrDefaultAsync(x => 
-									x.FirstName.Equals(firstName) && 
+									.FirstOrDefaultAsync(x =>
+									x.FirstName.Equals(firstName) &&
 									x.LastName.Equals(lastName));
 				return customerInfo;
 			}
@@ -69,19 +70,19 @@ namespace HotelReservation.Services
 			}
 		}
 
-        public async Task<CustomerInfo> GetCustomerInfoByUserNameAsync(string userName)
-        {
+		public async Task<CustomerInfo> GetCustomerInfoByUserNameAsync(string userName)
+		{
 			try
 			{
 				var customerInfo = await db.CustomerInfo.FirstOrDefaultAsync(x => x.UserName == userName);
 				return customerInfo;
 
-            }
+			}
 			catch (Exception e)
 			{
 				throw new Exception(e.Message);
 			}
-        }
+		}
 
 		public async Task UpdateCustomerInfoAsync(CustomerInfo newCustomerInfo)
 		{
@@ -95,5 +96,79 @@ namespace HotelReservation.Services
 				throw new Exception(e.Message);
 			}
 		}
+		#endregion
+
+		#region BillingInfo
+
+		public async Task AddBillingInfoAsync(BillingInfo billingInfo)
+		{
+			try
+			{
+				db.BillingInfo.Add(billingInfo);
+				await db.SaveChangesAsync();
+			}
+			catch (Exception e)
+			{
+				throw new Exception(e.Message);
+			}
+		}
+
+		public async Task UpdateBillingInfoAsync(BillingInfo newBillingInfo)
+		{
+			try
+			{
+				db.BillingInfo.Update(newBillingInfo);
+				await db.SaveChangesAsync();
+			}
+			catch (Exception e)
+			{
+				throw new Exception(e.Message);
+			}
+		}
+
+		public async Task<BillingInfo> GetBillingInfoByIdAsync(int id)
+		{
+			try
+			{
+				var billingInfo = await db.BillingInfo.FindAsync(id);
+				return billingInfo;
+			}
+			catch (Exception e)
+			{
+				throw new Exception(e.Message);
+			}
+		}
+
+		public async Task<BillingInfo> GetBillingInfoByUserNameAsync(string userName)
+		{
+			try
+			{
+				var billingInfo = await db.BillingInfo.FirstOrDefaultAsync(x => x.UserName.Equals(userName));	
+				return billingInfo;
+			}
+			catch (Exception e)
+			{
+				throw new Exception(e.Message);
+			}
+		}
+
+		public async Task<BillingInfo> GetBillingInfoByFirstNameLastNameAsync(string firstName, string lastName)
+		{
+			try
+			{
+				var billingInfo = await db.BillingInfo
+					.FirstOrDefaultAsync(x =>
+					x.BillingFirstName.Equals(firstName) &&
+					x.BillingLastName.Equals(lastName)
+				);
+				return billingInfo;
+			}
+			catch (Exception e)
+			{
+				throw new Exception(e.Message);
+			}
+		}
+
+		#endregion
 	}
 }

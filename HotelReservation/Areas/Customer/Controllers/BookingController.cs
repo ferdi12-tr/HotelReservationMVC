@@ -10,89 +10,97 @@ using HotelReservation.Models;
 
 namespace HotelReservation.Areas.Customer.Controllers
 {
-    [Area("Customer")]
-    [Authorize]
-    public class BookingController : Controller
-    {
-        private readonly IRoomService roomService;
-        private readonly ICustomerService customerService;
-        private readonly ILogger logger;
+	[Area("Customer")]
+	[Authorize]
+	public class BookingController : Controller
+	{
+		private readonly IRoomService roomService;
+		private readonly ICustomerService customerService;
+		private readonly ILogger logger;
+		private readonly Utils.Utils utils;
 
-        public BookingController(IRoomService roomService, ILogger<BookingController> logger, ICustomerService customerService)
-        {
-            this.roomService = roomService;
-            this.logger = logger;
-            this.customerService = customerService;
-        }
+		public BookingController(
+			IRoomService roomService,
+			ILogger<BookingController> logger,
+			ICustomerService customerService,
+			Utils.Utils utils
+			)
+		{
+			this.roomService = roomService;
+			this.logger = logger;
+			this.customerService = customerService;
+			this.utils = utils;
+		}
 
-        [HttpPost]
-        public async Task<IActionResult> Index(BookModelView model) // send filled model from room detail page
-        {
-            try
-            {
-                var selectedRoom = await roomService.GetRoomByIdAsync(model.SelectedRoomId);
-                model.Room = selectedRoom;
-                return View(model);
-            }
-            catch (Exception e)
-            {
-                logger.LogError($"BookingController ----- Index ----- {e.Message}");
-            }
-            return RedirectToAction("Index", "Home");
-        }
+		[HttpPost]
+		public async Task<IActionResult> Index(BookModelView model) // send filled model from room detail page
+		{
+			try
+			{
+				var selectedRoom = await roomService.GetRoomByIdAsync(model.SelectedRoomId);
+				model.Room = selectedRoom;
+				return View(model);
+			}
+			catch (Exception e)
+			{
+				logger.LogError($"BookingController ----- Index ----- {e.Message}");
+			}
+			return RedirectToAction("Index", "Home");
+		}
 
-        [HttpPost]
-        public async Task<IActionResult> ConfirmBooking(BookModelView bookingModel)
-        {
-            try
-            {
-                var customerInfo = new CustomerInfo
-                {
-                    FirstName = bookingModel.FirstName,
-                    LastName = bookingModel.LastName,
-                    UserName = bookingModel.UserName,
-                    AddressLine1 = bookingModel.AddressLine1,
-                    AddressLine2 = bookingModel.AddressLine2,
-                    City = bookingModel.City,
-                    ZipCode = bookingModel.ZipCode,
-                    Country = bookingModel.Country,
-                    State = bookingModel.State
-                };
-                
-                var result = await customerService.GetCustomerInfoByUserNameAsync(customerInfo.UserName);
-                if (result == null)
-                {
-                    await customerService.AddCustomerInfoAsync(customerInfo);
-                }
-                else
-                {
+		[HttpPost]
+		public async Task<IActionResult> ConfirmBooking(BookModelView bookingModel)
+		{
+			try
+			{
+				// customer db process
+				var customerInfo = utils.FillCustomerInfo(bookingModel);
+				var cresult = await customerService.GetCustomerInfoByUserNameAsync(bookingModel.UserName);
+				if (cresult == null)
+				{
+					await customerService.AddCustomerInfoAsync(customerInfo);
+				}
+				else
+				{
 					await customerService.UpdateCustomerInfoAsync(customerInfo);
+				}
+
+				// billing db process
+				var billingInfo = utils.FillBillingInfo(bookingModel);
+				var bresult = await customerService.GetBillingInfoByUserNameAsync(bookingModel.UserName);
+				if (bresult == null)
+				{
+					await customerService.AddBillingInfoAsync(billingInfo);
+				}
+				else
+				{
+					await customerService.UpdateBillingInfoAsync(billingInfo);
 				}
 
 				return RedirectToAction("Payment", bookingModel);
 			}
-            catch (Exception e)
-            {
+			catch (Exception e)
+			{
 				logger.LogError($"BookingController ----- ConfirmBooking ----- {e.Message}");
 			}
-            return RedirectToAction("ErrorPage", "Home");
-        }
+			return RedirectToAction("ErrorPage", "Home");
+		}
 
-        public async Task<IActionResult> Payment(BookModelView bookingModel)
-        {
+		public async Task<IActionResult> Payment(BookModelView bookingModel)
+		{
 			var selectedRoom = await roomService.GetRoomByIdAsync(bookingModel.SelectedRoomId);
 
 			Options options = new Options();
-            options.ApiKey = "sandbox-IggZcAiOwMQcRK8Hab6XjtntIPvQknif";
-            options.SecretKey = "sandbox-n1SHplPi9t0FnDK2kIgGERQnSUQtBkkx";
+			options.ApiKey = "sandbox-IggZcAiOwMQcRK8Hab6XjtntIPvQknif";
+			options.SecretKey = "sandbox-n1SHplPi9t0FnDK2kIgGERQnSUQtBkkx";
 			options.BaseUrl = "https://sandbox-api.iyzipay.com";
 
 			CreateCheckoutFormInitializeRequest request = new CreateCheckoutFormInitializeRequest();
 			request.Locale = Locale.TR.ToString();
 			request.ConversationId = "123456789";
 			request.Price = selectedRoom.PricePerHour.ToString();
-            request.PaidPrice = selectedRoom.PricePerHour.ToString();
-            request.Currency = Currency.TRY.ToString();
+			request.PaidPrice = selectedRoom.PricePerHour.ToString();
+			request.Currency = Currency.TRY.ToString();
 			request.BasketId = "B67832";
 			request.PaymentGroup = PaymentGroup.PRODUCT.ToString();
 			request.CallbackUrl = "https://localhost:7140/Booking/PaymentCallback?Area=Customer"; /// Geri Dönüş Urlsi
@@ -132,22 +140,23 @@ namespace HotelReservation.Areas.Customer.Controllers
 
 			List<BasketItem> basketItems = new List<BasketItem>();
 			BasketItem basketItem = new BasketItem();
-            basketItem.Id = selectedRoom.Id.ToString();
-            basketItem.Name = selectedRoom.RoomName;
-            basketItem.Category1 = selectedRoom.Tag;
-            basketItem.Price = selectedRoom.PricePerHour.ToString();
-            basketItem.ItemType = BasketItemType.PHYSICAL.ToString();
-            basketItems.Add(basketItem);
+			basketItem.Id = selectedRoom.Id.ToString();
+			basketItem.Name = selectedRoom.RoomName;
+			basketItem.Category1 = selectedRoom.Tag;
+			basketItem.Price = selectedRoom.PricePerHour.ToString();
+			basketItem.ItemType = BasketItemType.PHYSICAL.ToString();
+			basketItems.Add(basketItem);
 
-            request.BasketItems = basketItems;
-            CheckoutFormInitialize checkoutFormInitialize = CheckoutFormInitialize.Create(request, options);
+			request.BasketItems = basketItems;
+			CheckoutFormInitialize checkoutFormInitialize = CheckoutFormInitialize.Create(request, options);
 			ViewBag.pay = checkoutFormInitialize.CheckoutFormContent;
-            return View();
-        }
+			return View();
+		}
 
-        public IActionResult PaymentCallback()
-        {
-            return View();
-        }
-    }
+		[AllowAnonymous]
+		public IActionResult PaymentCallback()
+		{
+			return View();
+		}
+	}
 }

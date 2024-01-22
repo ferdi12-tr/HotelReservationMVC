@@ -21,6 +21,7 @@ namespace HotelReservation
             //Custom Services
             builder.Services.AddTransient<IRoomService, RoomService>();
             builder.Services.AddTransient<ICustomerService, CustomerService>();
+            builder.Services.AddScoped<Utils.Utils, Utils.Utils>();
 
             //Identity
             builder.Services.AddIdentity<AppUser, AppRole>()

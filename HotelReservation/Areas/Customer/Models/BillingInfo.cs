@@ -7,7 +7,8 @@ namespace HotelReservation.Areas.Customer.Models
         public int Id { get; set; }
         public string? BillingFirstName { get; set; }
 		public string? BillingLastName { get; set; }
-		public string? BillingAddressLine1 { get; set; }
+        public string? UserName { get; set; }
+        public string? BillingAddressLine1 { get; set; }
 		public string? BillingAddressLine2 { get; set; }
 		public string? BillingCity { get; set; }
 		public string? BillingZipCode { get; set; }
