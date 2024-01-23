@@ -1,12 +1,14 @@
 ﻿using HotelReservation.Areas.Customer.Models;
 using HotelReservation.Data;
 using HotelReservation.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Tsp;
 
 namespace HotelReservation.Areas.Admin.Controllers
 {
     [Area("Admin")]
+	[Authorize(Roles="Admin")]
     public class MainController : Controller
     {
         private readonly IRoomService roomService;

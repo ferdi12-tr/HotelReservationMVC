@@ -95,11 +95,14 @@
                                 Contact
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "Main", new {Area="Admin"})">
-                                Admin Panel
-                            </a>
-                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Main", new {Area="Admin"})">
+                                    Admin Panel
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </nav>

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Identity;
 namespace HotelReservation.Areas.Customer.Controllers
 {
 	[Area("Customer")]
-	[Authorize]
+	[Authorize(Roles = "Customer, Admin")]
 	public class BookingController : Controller
 	{
 		private readonly IRoomService roomService;

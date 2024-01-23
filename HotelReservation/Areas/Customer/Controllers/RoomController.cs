@@ -1,11 +1,13 @@
 ﻿using HotelReservation.Areas.Customer.Models;
 using HotelReservation.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelReservation.Areas.Customer.Controllers
 {
     [Area("Customer")]
-    public class RoomController : Controller
+	[Authorize(Roles = "Customer, Admin")]
+	public class RoomController : Controller
     {
         private readonly IRoomService roomService;
         private readonly ILogger logger;

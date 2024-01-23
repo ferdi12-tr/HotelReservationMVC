@@ -38,6 +38,7 @@ namespace HotelReservation.Controllers
                 };
 
                 var result = await userManager.CreateAsync(user, appUserRegisterDTO.Password);
+                await userManager.AddToRoleAsync(user, "Customer"); // default register with customer role
 
                 if (result.Succeeded)
                 {

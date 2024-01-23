@@ -61,11 +61,14 @@
 							</a>
 						</li>
 
-						<li class="nav-item">
-							<a class="nav-link" href="@Url.Action("Index", "Main", new {Area="Admin", roomId=1})">
-								Admin Panel
-							</a>
-						</li>
+						@if (User.IsInRole("Admin"))
+						{
+							<li class="nav-item">
+								<a class="nav-link" href="@Url.Action("Index", "Main", new {Area="Admin"})">
+									Admin Panel
+								</a>
+							</li>
+						}
 
 						<li class="nav-item sp">
 							<a id="header-search-btn" class="nav-link link-color"><i class="fa fa-search"></i></a>
