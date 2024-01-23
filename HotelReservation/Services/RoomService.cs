@@ -42,6 +42,20 @@ namespace HotelReservation.Services
                 throw new Exception(e.Message);
             }
         }
+
+        public async Task UpdateRoomAsync(Room model)
+        {
+            try
+            {
+                db.Room.Update(model);
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+        }
     }
 }
  

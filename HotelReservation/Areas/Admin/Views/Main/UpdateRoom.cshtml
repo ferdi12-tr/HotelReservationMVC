@@ -1,0 +1,157 @@
+﻿@model Room
+@{
+	ViewData["Title"] = "UpdateRoom";
+	Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-6">
+			<h1 class="mt-3 mb-3">
+				Update @Model.RoomName Room
+			</h1>
+
+			<form method="post" enctype="multipart/form-data" asp-action="UpdateRoom" asp-area="Admin">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<input asp-for="Id" type="hidden" />
+				<div class="form-group mt-3">
+					<label asp-for="RoomName">Room Name: </label>
+					<input asp-for="RoomName" type="text" class="form-control" />
+					<span asp-validation-for="RoomName" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mt-3">
+					<label asp-for="Description">Description: </label>
+					<textarea asp-for="Description" class="form-control" rows="50"></textarea>
+					<span asp-validation-for="Description" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mt-3">
+					<label asp-for="PricePerHour">Price Per Hour: </label>
+					<input asp-for="PricePerHour" type="number" min="0" class="form-control" />
+					<span asp-validation-for="PricePerHour" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mt-3">
+					<label asp-for="Tag">Tag: </label>
+					<input asp-for="Tag" type="text" class="form-control" />
+					<span asp-validation-for="Tag" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mt-3">
+					<label asp-for="Address">Address: </label>
+					<textarea asp-for="Address" type="text" rows="5" class="form-control"></textarea>
+					<span asp-validation-for="Address" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mt-3">
+					<label asp-for="Bethroom">Bethroom: </label>
+					<input asp-for="Bethroom" type="text" class="form-control" />
+					<span asp-validation-for="Bethroom" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mt-3">
+					<label asp-for="ImgUrl1" class="control-label">Choose Image 1</label>
+					<input asp-for="ImgUrl1" class="form-control" type="hidden" />
+					<input asp-for="ImgUrl1" class="form-control" type="file" name="ImgUrl1" />
+					<img src="~/@Model.ImgUrl1" width="300"/>
+					<span asp-validation-for="ImgUrl1" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mt-3">
+					<label asp-for="ImgUrl2" class="control-label">Choose Image 2</label>
+					<input asp-for="ImgUrl2" class="form-control" type="hidden" />
+					<input asp-for="ImgUrl2" class="form-control" type="file" name="ImgUrl2" />
+					<img src="~/@Model.ImgUrl2" width="300" />
+					<span asp-validation-for="ImgUrl2" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mt-3">
+					<label asp-for="ImgUrl3" class="control-label">Choose Image 3</label>
+					<input asp-for="ImgUrl3" class="form-control" type="hidden" />
+					<input asp-for="ImgUrl3" class="form-control" type="file" name="ImgUrl3" />
+					<img src="~/@Model.ImgUrl3" width="300" />
+					<span asp-validation-for="ImgUrl3" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mt-3">
+					<label asp-for="ImgUrl4" class="control-label">Choose Image 4</label>
+					<input asp-for="ImgUrl4" class="form-control" type="hidden" />
+					<input asp-for="ImgUrl4" class="form-control" type="file" name="ImgUrl4" />
+					<img src="~/@Model.ImgUrl4" width="300" />
+					<span asp-validation-for="ImgUrl4" class="text-danger"></span>
+				</div>
+
+				<div class="form-group mt-3">
+					<label asp-for="ImgUrl5" class="control-label">Choose Image 5</label>
+					<input asp-for="ImgUrl5" class="form-control" type="hidden" />
+					<input asp-for="ImgUrl5" class="form-control" type="file" name="ImgUrl5" />
+					<img src="~/@Model.ImgUrl5" width="300" />
+					<span asp-validation-for="ImgUrl5" class="text-danger"></span>
+				</div>
+
+				<div class="form-check form-switch mb-3 mt-3">
+					<input class="form-check-input" type="checkbox" asp-for="HasAirConditioning" data-val="true">
+					<label asp-for="HasAirConditioning">Air Conditioning</label>
+				</div>
+
+				<div class="form-check form-switch mb-3 mt-3">
+					<input class="form-check-input" type="checkbox" asp-for="HasBalcony" data-val="true">
+					<label asp-for="HasBalcony">Balcony</label>
+				</div>
+
+				<div class="form-check form-switch mb-3 mt-3">
+					<input class="form-check-input" type="checkbox" asp-for="HasGym" data-val="true">
+					<label asp-for="HasGym">Gym</label>
+				</div>
+
+				<div class="form-check form-switch mb-3 mt-3">
+					<input class="form-check-input" type="checkbox" asp-for="HasParking" data-val="true">
+					<label asp-for="HasParking">Parking</label>
+				</div>
+
+				<div class="form-check form-switch mb-3 mt-3">
+					<input class="form-check-input" type="checkbox" asp-for="HasBeachView" data-val="true">
+					<label asp-for="HasBeachView">Beach View</label>
+				</div>
+
+				<div class="form-check form-switch mb-3 mt-3">
+					<input class="form-check-input" type="checkbox" asp-for="HasFreeNewspaper" data-val="true">
+					<label asp-for="HasFreeNewspaper">Free Newspaper</label>
+				</div>
+
+				<div class="form-check form-switch mb-3 mt-3">
+					<input class="form-check-input" type="checkbox" asp-for="HasPool" data-val="true">
+					<label asp-for="HasPool">Pool</label>
+				</div>
+
+				<div class="form-check form-switch mb-3 mt-3">
+					<input class="form-check-input" type="checkbox" asp-for="HasTv" data-val="true">
+					<label asp-for="HasTv">Tv</label>
+				</div>
+
+				<div class="form-check form-switch mb-3 mt-3">
+					<input class="form-check-input" type="checkbox" asp-for="HasRoomService" data-val="true">
+					<label asp-for="HasRoomService">Room Service</label>
+				</div>
+
+				<div class="form-check form-switch mb-3 mt-3">
+					<input class="form-check-input" type="checkbox" asp-for="HasBreakfast" data-val="true">
+					<label asp-for="HasBreakfast">Breakfast</label>
+				</div>
+
+				<div class="form-check form-switch mb-3 mt-3">
+					<input class="form-check-input" type="checkbox" asp-for="HasFreeWifi" data-val="true">
+					<label asp-for="HasFreeWifi">Free Wifi</label>
+				</div>
+
+				<div class="form-group">
+					<input type="submit" value="Save" class="btn btn-primary" />
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+

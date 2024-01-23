@@ -4,6 +4,42 @@ namespace HotelReservation.Utils
 {
 	public class Utils
 	{
+		private readonly IWebHostEnvironment he;
+
+		public Utils(IWebHostEnvironment he)
+		{
+			this.he = he;
+		}
+
+		public IEnumerable<string[]> UplodaImage(IFormFileCollection? files)
+		{
+			
+
+			if (files.Count > 0)
+			{
+				foreach (var file in files)
+				{
+					string image = null;
+					string fileName = Guid.NewGuid().ToString();
+					string imgPath = @"img\room";
+					var upload = Path.Combine(he.WebRootPath, imgPath);
+					var ext = Path.GetExtension(file.FileName);
+					var ImagePath = Path.Combine(he.WebRootPath, file.Name.TrimStart('\\'));
+					if (System.IO.File.Exists(ImagePath))
+					{
+						System.IO.File.Delete(ImagePath);
+					}
+					using (var fileStream = new FileStream(Path.Combine(upload, fileName + ext), FileMode.Create))
+					{
+						file.CopyTo(fileStream);
+					}
+					image = Path.Combine(imgPath, fileName + ext);
+					yield return new string[] { image , file.Name};
+				}
+			}
+			yield break;
+		}
+
 		public CustomerInfo FillCustomerInfo(BookModelView bookingModel)
 		{
 			return new CustomerInfo

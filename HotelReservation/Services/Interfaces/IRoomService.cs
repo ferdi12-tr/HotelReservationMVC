@@ -7,5 +7,6 @@ namespace HotelReservation.Services.Interfaces
     {
         public Task<IEnumerable<Room>> GetAllRoomsAsync();
         public Task<Room> GetRoomByIdAsync(int roomId);
+        public Task UpdateRoomAsync(Room model);
     }
 }

@@ -1,8 +1,39 @@
-﻿
+﻿@using HotelReservation.Areas.Customer.Models
+@model IEnumerable<Room>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
+<div class="m-5">
+    <h1>ROOM LIST</h1>
 
-<h1>Index</h1>
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Image</th>
+                <th>Room Name</th>
+                <th>Price Per Hour</th>
+                <th>Tag</th>
+                <th>Settings</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var room in Model)
+            {
+                <tr>
+                    <td>@room.Id</td>
+                    <td><img src="~/@room.ImgUrl1" width="80" /></td>
+                    <td>@room.RoomName</td>
+                    <td>@room.PricePerHour</td>
+                    <td>@room.Tag</td>
+                    <td>
+                        <a href="@Url.Action("UpdateRoom", "Main", new {Area="Admin", roomId=room.Id})" class="btn btn-primary btn-sm text-white">Edit</a>
+                        <a class="btn btn-danger btn-sm text-white">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
