@@ -2,6 +2,7 @@
 using HotelReservation.Data;
 using HotelReservation.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Tsp;
 
 namespace HotelReservation.Areas.Admin.Controllers
 {
@@ -23,6 +24,7 @@ namespace HotelReservation.Areas.Admin.Controllers
             this.logger = logger;
         }
 
+		[HttpGet]
         public async Task<IActionResult> Index()
         {
             var roomList = await roomService.GetAllRoomsAsync();
@@ -78,5 +80,54 @@ namespace HotelReservation.Areas.Admin.Controllers
 			}
 			return RedirectToAction("ErrorPage", "Home");
 		}
-    }
+
+		[HttpGet]
+		public async Task<IActionResult> CreateRoom()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> CreateRoom(Room createdRoom) 
+		{
+			try
+			{
+				if (ModelState.IsValid)
+				{
+					var files = HttpContext.Request.Form.Files;
+					foreach (var imageInfo in utils.UplodaImage(files)) // to find out which file has changed
+					{
+						if (imageInfo[1] == nameof(createdRoom.ImgUrl1))
+						{
+							createdRoom.ImgUrl1 = imageInfo[0];
+						}
+						else if (imageInfo[1] == nameof(createdRoom.ImgUrl2))
+						{
+							createdRoom.ImgUrl2 = imageInfo[0];
+						}
+						else if (imageInfo[1] == nameof(createdRoom.ImgUrl3))
+						{
+							createdRoom.ImgUrl3 = imageInfo[0];
+						}
+						else if (imageInfo[1] == nameof(createdRoom.ImgUrl4))
+						{
+							createdRoom.ImgUrl4 = imageInfo[0];
+						}
+						else if (imageInfo[1] == nameof(createdRoom.ImgUrl5))
+						{
+							createdRoom.ImgUrl5 = imageInfo[0];
+						}
+					}
+					await roomService.AddRoomAsync(createdRoom);
+				}
+				return RedirectToAction("Index", "Main");
+			}
+			catch (Exception e)
+			{
+				logger.LogError($"MainController ----- CreateRoom ----- {e.Message}");
+			}
+			return RedirectToAction("ErrorPage", "Home");
+		}
+
+	}
 }

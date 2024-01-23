@@ -15,7 +15,20 @@ namespace HotelReservation.Services
             this.db = db;
         }
 
-        public async Task<IEnumerable<Room>> GetAllRoomsAsync()
+		public async Task AddRoomAsync(Room room)
+		{
+            try
+            {
+                db.Room.Add(room);
+                await db.SaveChangesAsync();
+            }
+			catch (Exception e)
+			{
+				throw new Exception(e.Message);
+			}
+		}
+
+		public async Task<IEnumerable<Room>> GetAllRoomsAsync()
         {
             try
             {
