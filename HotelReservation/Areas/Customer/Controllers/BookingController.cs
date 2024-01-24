@@ -39,7 +39,7 @@ namespace HotelReservation.Areas.Customer.Controllers
 			this.bookingService = bookingService;
 		}
 
-		[NonAction] // only post method must reach index action
+		[NonAction] // only post from form must reach index action
 		public IActionResult Index()
 		{
 			return View();
@@ -169,12 +169,22 @@ namespace HotelReservation.Areas.Customer.Controllers
 		}
 
 		[AllowAnonymous] // callback throw unauthorize without this attribute
-		public IActionResult PaymentCallback(int transcationId = 0) // get transactionId to display to customer
+		public async Task<IActionResult> PaymentCallback(int transcationId = 0) // get transactionId to display to customer
 		{
 			if (transcationId == 0)
 			{
 				return RedirectToAction("ErrorPage", "Home");
 			}
+			try
+			{
+				var bookingInfo = await bookingService.GetBookingInfoByTransactionId(transcationId.ToString());
+				bookingInfo.IsPaid = true;
+				await bookingService.UpdateBookingInfoAsync(bookingInfo);
+			}
+			catch (Exception e)
+			{
+                logger.LogError($"BookingController ----- PaymentCallback ----- {e.Message}");
+            }
 			return View(transcationId);
 		}
 	}
