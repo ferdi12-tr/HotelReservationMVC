@@ -9,6 +9,10 @@
         <img src="~/@Model.ImageUrl" width="50%" class="ms-5 mt-5"/>
     </div>
     <div class="col-md-7">
+        <p class="mt-5 me-5">
+            <a asp-area="Customer" asp-controller="Account" asp-action="BookingInfos" class="btn btn-warning btn-sm text-white float-end">Book Details</a>
+        </p>
+        <br />
         <form method="post" enctype="multipart/form-data" asp-action="Index" asp-controller="Account" asp-area="Customer">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="Id" type="hidden" />

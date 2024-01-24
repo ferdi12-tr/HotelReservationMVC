@@ -53,13 +53,14 @@ namespace HotelReservation.Services
 			}
 		}
 
-		public async Task<BookingInfo> GetBookingInfoByCustomerId(int customerId)
+		public async Task<IEnumerable<BookingInfo>> GetBookingInfoByCustomerId(int customerId)
 		{
 			try
 			{
 				var bookingInfo = await db.BookingInfo
 					.Where(x => x.AppUserId == customerId)
-					.FirstOrDefaultAsync();
+					.Include(y => y.Room)
+					.ToListAsync();
 
 				return bookingInfo;
 			}

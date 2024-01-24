@@ -8,6 +8,6 @@ namespace HotelReservation.Services.Interfaces
 		public Task UpdateBookingInfoAsync(BookingInfo NewBookingInfo);
 		public Task<BookingInfo> GetBookingInfoByIdAsync(int id);
 		public Task<BookingInfo> GetBookingInfoByTransactionId(string transactionId);
-		public Task<BookingInfo> GetBookingInfoByCustomerId(int customerId);
+		public Task<IEnumerable<BookingInfo>> GetBookingInfoByCustomerId(int customerId);
 	}
 }

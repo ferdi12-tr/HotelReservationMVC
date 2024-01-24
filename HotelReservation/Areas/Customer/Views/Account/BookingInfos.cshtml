@@ -1,0 +1,49 @@
+﻿@model IEnumerable<BookingInfo>
+@{
+    ViewData["Title"] = "BookingInfos";
+    Layout = "~/Areas/Customer/Views/_Layout.cshtml";
+}
+
+<div class="m-5">
+    <h1>BOOKING DETAILS</h1>
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Image</th>
+                <th>Room Name</th>
+                <th>Price Per Hour</th>
+                <th>Total Price</th>
+                <th>Check In Date</th>
+                <th>Check Out Date</th>
+                <th>Paid</th>
+                <th>Transaction ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var booking in Model)
+            {
+                <tr>
+                    <td>@booking.Id</td>
+                    <td><img src="~/@booking.Room?.ImgUrl1" width="80" /></td>
+                    <td>@booking.Room?.RoomName</td>
+                    <td>@booking.Room?.PricePerHour</td>
+                    <td>@booking.TotalPrice</td>
+                    <td>@booking.CheckInDate</td>
+                    <td>@booking.CheckOutDate</td>
+                    <td>
+                        @if ((bool)booking.IsPaid)
+                        {
+                            <span class="text-success">Yes</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">No</span>
+                        }
+                    </td>
+                    <td>@booking.TransactionId</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

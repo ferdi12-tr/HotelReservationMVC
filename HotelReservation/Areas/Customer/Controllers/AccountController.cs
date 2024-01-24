@@ -1,6 +1,7 @@
 ﻿using HotelReservation.Areas.Admin.Controllers;
 using HotelReservation.Areas.Customer.Models;
 using HotelReservation.Models;
+using HotelReservation.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -15,18 +16,21 @@ namespace HotelReservation.Areas.Customer.Controllers
 	{
 		private readonly UserManager<AppUser> userManager;
         private readonly SignInManager<AppUser> signInManager;
+		private readonly IBookingService bookingService;
         private readonly ILogger logger;
         private readonly Utils.Utils utils;
 
         public AccountController(
 			UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
+			IBookingService bookingService,
             ILogger<AccountController> logger,
             Utils.Utils utils
         )
 		{
 			this.userManager = userManager;
 			this.signInManager = signInManager;
+			this.bookingService = bookingService;
 			this.logger = logger;
 			this.utils = utils;
 		}
@@ -98,5 +102,20 @@ namespace HotelReservation.Areas.Customer.Controllers
             return RedirectToAction("ErrorPage", "Home");
 		}
 
+		public async Task<IActionResult> BookingInfos()
+		{
+			try
+			{
+                var userName = User.Identity.Name;
+                var customer = await userManager.FindByNameAsync(userName);
+                var bookDetails = await bookingService.GetBookingInfoByCustomerId(customer.Id);
+                return View(bookDetails);
+            }
+			catch (Exception e)
+			{
+                logger.LogError($"BookingController ----- ConfirmBooking ----- {e.Message}");
+            }
+            return RedirectToAction("ErrorPage", "Home");
+        }
     }
 }
