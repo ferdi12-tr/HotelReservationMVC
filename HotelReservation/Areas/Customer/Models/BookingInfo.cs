@@ -10,7 +10,8 @@ namespace HotelReservation.Areas.Customer.Models
         public int Id { get; set; }
 		public string? TransactionId { get; set; }
 		public bool? IsPaid { get; set; }
-		public DateTime CheckInDate { get; set; }
+        public double TotalPrice { get; set; }
+        public DateTime CheckInDate { get; set; }
 		public DateTime CheckOutDate { get; set; }
         public int AppUserId { get; set; }
         public AppUser? AppUser { get; set; }

@@ -52,6 +52,8 @@ namespace HotelReservation.Areas.Customer.Controllers
 			{
 				var selectedRoom = await roomService.GetRoomByIdAsync(model.SelectedRoomId);
 				model.Room = selectedRoom;
+				double totalPrice = utils.CalculateTotalBookingPrice(model.CheckInDate, model.CheckOutDate, model.Room.PricePerHour);
+				model.TotalPrice = totalPrice;
 				return View(model);
 			}
 			catch (Exception e)
@@ -113,8 +115,8 @@ namespace HotelReservation.Areas.Customer.Controllers
 			CreateCheckoutFormInitializeRequest request = new CreateCheckoutFormInitializeRequest();
 			request.Locale = Locale.TR.ToString();
 			request.ConversationId = "123456789";
-			request.Price = selectedRoom.PricePerHour.ToString();
-			request.PaidPrice = selectedRoom.PricePerHour.ToString();
+			request.Price = bookingModel.TotalPrice.ToString();
+			request.PaidPrice = bookingModel.TotalPrice.ToString();
 			request.Currency = Currency.TRY.ToString();
 			request.BasketId = "B67832";
 			request.PaymentGroup = PaymentGroup.PRODUCT.ToString();
@@ -158,7 +160,7 @@ namespace HotelReservation.Areas.Customer.Controllers
 			basketItem.Id = selectedRoom.Id.ToString();
 			basketItem.Name = selectedRoom.RoomName;
 			basketItem.Category1 = selectedRoom.Tag;
-			basketItem.Price = selectedRoom.PricePerHour.ToString();
+			basketItem.Price = bookingModel.TotalPrice.ToString();
 			basketItem.ItemType = BasketItemType.PHYSICAL.ToString();
 			basketItems.Add(basketItem);
 

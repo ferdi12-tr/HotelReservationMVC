@@ -6,7 +6,7 @@
         public int SelectedRoomId { get; set; }
         public string? CheckInDate { get; set; }
         public string? CheckOutDate { get; set; }
-
+        public double TotalPrice { get; set; }
         #region PaymentInfo
         public string? UserName { get; set; }
         public string? TransactionId { get; set; }

@@ -1,4 +1,5 @@
 ﻿using HotelReservation.Areas.Customer.Models;
+using System.Globalization;
 
 namespace HotelReservation.Utils
 {
@@ -75,16 +76,39 @@ namespace HotelReservation.Utils
 
 		public BookingInfo FillBookingInfo(BookModelView bookingModel, int customerInfoId, int billingInfoId)
 		{
+			if (!DateTime.TryParseExact(bookingModel.CheckInDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime newCheckInDate) ||
+				!DateTime.TryParseExact(bookingModel.CheckInDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime newCheckOutDate))
+			{
+				throw new ArgumentException("Invalid date format. Please use the format MM/dd/yyyy.");
+			}
+
 			return new BookingInfo
 			{
 				TransactionId = bookingModel.TransactionId,
 				IsPaid = false,
-				CheckInDate = DateTime.Parse(bookingModel.CheckInDate),
-				CheckOutDate = DateTime.Parse(bookingModel.CheckOutDate),
+				TotalPrice = bookingModel.TotalPrice,
+				CheckInDate = newCheckInDate,
+				CheckOutDate = newCheckOutDate,
 				RoomId = bookingModel.SelectedRoomId,
 				CustomerInfoId = customerInfoId,
 				BillingInfoId = billingInfoId	
 			};
+		}
+	
+		public double CalculateTotalBookingPrice(string checkInDate, string checkOutDate, double pricePerHour)
+		{
+            if (!DateTime.TryParseExact(checkInDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime newCheckInDate) ||
+				!DateTime.TryParseExact(checkOutDate, "MM/dd/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime newCheckOutDate))
+            {
+                throw new ArgumentException("Invalid date format. Please use the format MM/dd/yyyy.");
+            }
+
+   //         string[] checkInList = checkInDate.Split('/');
+			//string[] checkOutList = checkOutDate.Split("/");
+			//var newCheckInDate = new DateTime(Convert.ToInt32(checkInList[2]), Convert.ToInt32(checkInList[1]), Convert.ToInt32(checkInList[0]));
+			//var newCheckOutDate = new DateTime(Convert.ToInt32(checkOutList[2]), Convert.ToInt32(checkOutList[1]), Convert.ToInt32(checkOutList[0]));
+			TimeSpan timeSpan = newCheckOutDate - newCheckInDate;
+            return timeSpan.TotalHours * pricePerHour;
 		}
 	}
 }
