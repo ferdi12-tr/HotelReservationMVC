@@ -11,7 +11,7 @@ namespace HotelReservation.Utils
 			this.he = he;
 		}
 
-		public IEnumerable<string[]> UplodaImage(IFormFileCollection? files)
+		public IEnumerable<string[]> UplodaImage(IFormFileCollection? files, string imageLocation)
 		{
 			
 
@@ -21,7 +21,7 @@ namespace HotelReservation.Utils
 				{
 					string image = null;
 					string fileName = Guid.NewGuid().ToString();
-					string imgPath = @"img\room";
+					string imgPath = @"img\"+ imageLocation;
 					var upload = Path.Combine(he.WebRootPath, imgPath);
 					var ext = Path.GetExtension(file.FileName);
 					var ImagePath = Path.Combine(he.WebRootPath, file.Name.TrimStart('\\'));

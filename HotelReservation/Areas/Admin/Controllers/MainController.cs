@@ -48,7 +48,7 @@ namespace HotelReservation.Areas.Admin.Controllers
 				if (ModelState.IsValid)
 				{
 					var files = HttpContext.Request.Form.Files;
-					foreach (var imageInfo in utils.UplodaImage(files)) // to find out which file has changed
+					foreach (var imageInfo in utils.UplodaImage(files, "room")) // to find out which file has changed
 					{
 						if (imageInfo[1] == nameof(updatedRoom.ImgUrl1))
 						{
@@ -97,7 +97,7 @@ namespace HotelReservation.Areas.Admin.Controllers
 				if (ModelState.IsValid)
 				{
 					var files = HttpContext.Request.Form.Files;
-					foreach (var imageInfo in utils.UplodaImage(files)) // to find out which file has changed
+					foreach (var imageInfo in utils.UplodaImage(files, "room")) // to find out which file has changed
 					{
 						if (imageInfo[1] == nameof(createdRoom.ImgUrl1))
 						{

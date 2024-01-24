@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HotelReservation.Migrations
 {
-    public partial class add_appuser_approle_table : Migration
+    public partial class recreate_db : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -33,6 +33,7 @@ namespace HotelReservation.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailConfirmCode = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -51,6 +52,82 @@ namespace HotelReservation.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BillingInfo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BillingFirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BillingLastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BillingAddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BillingAddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BillingCity = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BillingZipCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BillingState = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BillingCountry = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BillingInfo", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CustomerInfo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddressLine1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddressLine2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ZipCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerInfo", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Room",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoomName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PricePerHour = table.Column<double>(type: "float", nullable: false),
+                    Tag = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImgUrl1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImgUrl2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImgUrl3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImgUrl4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImgUrl5 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HasAirConditioning = table.Column<bool>(type: "bit", nullable: false),
+                    HasBalcony = table.Column<bool>(type: "bit", nullable: false),
+                    HasGym = table.Column<bool>(type: "bit", nullable: false),
+                    HasParking = table.Column<bool>(type: "bit", nullable: false),
+                    HasBeachView = table.Column<bool>(type: "bit", nullable: false),
+                    Bethroom = table.Column<int>(type: "int", nullable: false),
+                    HasFreeNewspaper = table.Column<bool>(type: "bit", nullable: false),
+                    HasPool = table.Column<bool>(type: "bit", nullable: false),
+                    HasTv = table.Column<bool>(type: "bit", nullable: false),
+                    HasRoomService = table.Column<bool>(type: "bit", nullable: false),
+                    HasBreakfast = table.Column<bool>(type: "bit", nullable: false),
+                    HasFreeWifi = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Room", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,6 +236,50 @@ namespace HotelReservation.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BookingInfo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TransactionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsPaid = table.Column<bool>(type: "bit", nullable: true),
+                    CheckInDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CheckOutDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AppUserId = table.Column<int>(type: "int", nullable: false),
+                    RoomId = table.Column<int>(type: "int", nullable: false),
+                    CustomerInfoId = table.Column<int>(type: "int", nullable: false),
+                    BillingInfoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookingInfo", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookingInfo_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookingInfo_BillingInfo_BillingInfoId",
+                        column: x => x.BillingInfoId,
+                        principalTable: "BillingInfo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookingInfo_CustomerInfo_CustomerInfoId",
+                        column: x => x.CustomerInfoId,
+                        principalTable: "CustomerInfo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookingInfo_Room_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Room",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -197,6 +318,26 @@ namespace HotelReservation.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookingInfo_AppUserId",
+                table: "BookingInfo",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookingInfo_BillingInfoId",
+                table: "BookingInfo",
+                column: "BillingInfoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookingInfo_CustomerInfoId",
+                table: "BookingInfo",
+                column: "CustomerInfoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookingInfo_RoomId",
+                table: "BookingInfo",
+                column: "RoomId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -217,10 +358,22 @@ namespace HotelReservation.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BookingInfo");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "BillingInfo");
+
+            migrationBuilder.DropTable(
+                name: "CustomerInfo");
+
+            migrationBuilder.DropTable(
+                name: "Room");
         }
     }
 }

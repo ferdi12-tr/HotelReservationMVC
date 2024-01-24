@@ -88,7 +88,8 @@ namespace HotelReservation.Areas.Customer.Controllers
 				//booking info db process
 				var bookingInfo = utils.FillBookingInfo(bookingModel, customerInfoId, billingInfoId);
 				var user = await userManager.FindByNameAsync(bookingModel.UserName);
-				await bookingService.AddBookingInfoAsyc(bookingInfo, user.Id);
+				bookingInfo.AppUserId = user.Id;
+				await bookingService.AddBookingInfoAsyc(bookingInfo);
 
 
 				return RedirectToAction("Payment", bookingModel);

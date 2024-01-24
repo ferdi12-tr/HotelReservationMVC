@@ -14,19 +14,11 @@ namespace HotelReservation.Services
 			db = _db;
 		}
 
-		public async Task AddBookingInfoAsyc(BookingInfo bookingInfo, int appUserId)
+		public async Task AddBookingInfoAsyc(BookingInfo bookingInfo)
 		{
 			try
 			{
 				var returnedBookinInfo = db.BookingInfo.Add(bookingInfo);
-				var addedBookingInfo = returnedBookinInfo.Entity;
-				await db.SaveChangesAsync();
-
-				db.BookingInfoUserRelation.Add(new BookingInfoUserRelation
-				{
-					AppUserId = appUserId,
-					BookingInfoId = addedBookingInfo.Id
-				});
 				await db.SaveChangesAsync();
 			}
 			catch (Exception e)
@@ -65,24 +57,11 @@ namespace HotelReservation.Services
 		{
 			try
 			{
-				var relation = await db.BookingInfoUserRelation
+				var bookingInfo = await db.BookingInfo
 					.Where(x => x.AppUserId == customerId)
-					.Include(x => x.BookingInfo).FirstOrDefaultAsync();
+					.FirstOrDefaultAsync();
 
-				return new BookingInfo
-				{
-					Id = relation.BookingInfoId,
-					TransactionId = relation.BookingInfo.TransactionId,
-					IsPaid = relation.BookingInfo.IsPaid,
-					CheckInDate = relation.BookingInfo.CheckInDate,
-					CheckOutDate = relation.BookingInfo.CheckOutDate,
-					RoomId = relation.BookingInfo.RoomId,
-					Room = relation.BookingInfo.Room,
-					CustomerInfoId = relation.BookingInfo.CustomerInfoId,
-					CustomerInfo = relation.BookingInfo.CustomerInfo,
-					BillingInfoId = relation.BookingInfo.BillingInfoId,
-					BillingInfo = relation.BookingInfo.BillingInfo,
-				};
+				return bookingInfo;
 			}
 			catch (Exception e)
 			{

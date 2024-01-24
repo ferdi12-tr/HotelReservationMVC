@@ -1,0 +1,63 @@
+﻿@model AccountModelView
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Customer/Views/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-5">
+        <img src="~/@Model.ImageUrl" width="50%" class="ms-5"/>
+    </div>
+    <div class="col-md-7">
+        <form method="post" enctype="multipart/form-data" asp-action="Index" asp-controller="Account" asp-area="Customer">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" type="hidden" />
+            <div class="form-group mt-3">
+                <label asp-for="Name">Name: </label>
+                <input asp-for="Name" type="text" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="Surname">Surname: </label>
+                <input asp-for="Surname" type="text" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="ImageUrl" class="control-label">Choose Your Avatar</label>
+                <input asp-for="ImageUrl" class="form-control" type="hidden" />
+                <input asp-for="ImageUrl" class="form-control" type="file" name="ImageUrl" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="UserName">UserName: </label>
+                <input asp-for="UserName" type="text" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="Email">Email: </label>
+                <input asp-for="Email" type="email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+@*             <div class="form-group mt-3">
+                <label asp-for="OldPassword">Old Password: </label>
+                <input asp-for="OldPassword" type="password" class="form-control" />
+                <span asp-validation-for="OldPassword" class="text-danger"></span>
+            </div> *@
+
+            <div class="form-group mt-3">
+                <label asp-for="NewPassword">New Password: </label>
+                <input asp-for="NewPassword" type="password" class="form-control" />
+                <span asp-validation-for="NewPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3 mb-3">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
