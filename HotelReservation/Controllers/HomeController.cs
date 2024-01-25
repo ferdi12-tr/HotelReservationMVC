@@ -1,4 +1,5 @@
 ﻿using HotelReservation.Models;
+using HotelReservation.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,24 +7,30 @@ namespace HotelReservation.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IRoomService roomService;
+        private readonly ILogger<HomeController> logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IRoomService roomService)
         {
-            _logger = logger;
+            this.logger = logger;
+            this.roomService = roomService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-			return View();
-        }
-        
-        public IActionResult DisplayBlogs()
-        {
-            return View();
+            try
+            {
+                var roomList = await roomService.GetAllRoomsAsync();
+                return View(roomList.Take(3).ToList());
+            }
+            catch (Exception e)
+            {
+                logger.LogError($"BookingController ----- ConfirmBooking ----- {e.Message}");
+            }
+            return RedirectToAction("ErrorPage", "Home");
         }
 
-        public IActionResult DisplayHotels()
+        public IActionResult DisplayRooms()
         {
             return View();
         }

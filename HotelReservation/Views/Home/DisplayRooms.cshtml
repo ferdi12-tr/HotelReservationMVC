@@ -1,0 +1,110 @@
+﻿@using HotelReservation.Areas.Customer.Models
+@model IEnumerable<Room>
+@*
+    Display Rooms Partial View
+*@
+
+<!-- Room section start -->
+<div class="content-area hotel-section bg-grey">
+    <div class="overlay">
+        <div class="container">
+            <!-- Main title -->
+            <div class="main-title">
+                <h1>Our Best Rooms</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
+            </div>
+            <div class="row wow fadeInUp delay-04s">
+                @foreach (var room in Model)
+                {
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="hotel-box">
+                            <!-- Photo thumbnail -->
+                            <div class="photo-thumbnail">
+                                <div class="photo">
+                                    <img src="~/@room.ImgUrl1" alt="photo" class="img-fluid w-100">
+                                    <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=room.Id})">
+                                        <span class="blog-one__plus"></span>
+                                    </a>
+                                </div>
+                                <div class="pr">
+                                    <div class="rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half-full"></i>
+                                    </div>
+                                    $@room.PricePerHour /Hour
+                                </div>
+                            </div>
+                            <!-- Detail -->
+                            <div class="detail clearfix">
+                                <h3>
+                                    <a href="@Url.Action("RoomDetails", "Room", new {Area="Customer", roomId=room.Id})">
+                                        @room.RoomName
+                                    </a>
+                                </h3>
+                                <p class="location">
+
+                                    <i class="fa fa-map-marker"></i> @room.Address
+
+                                </p>
+                                <div class="fecilities">
+                                    <ul>
+
+                                        <li>
+                                            <i class="flaticon-bed"></i> Beds
+                                        </li>
+
+                                        @if (room.HasAirConditioning)
+                                        {
+                                            <li>
+                                                <i class="flaticon-air-conditioning"></i>
+                                                AC
+                                            </li>
+                                        }
+
+                                        @if (room.HasTv)
+                                        {
+                                            <li>
+                                                <i class="flaticon-graph-line-screen"></i>
+                                                TV
+                                            </li>
+                                        }
+
+                                        @if (room.HasGym)
+                                        {
+                                            <li>
+                                                <i class="flaticon-weightlifting"></i>
+                                                GYM
+                                            </li>
+                                        }
+
+                                        @if (room.HasFreeWifi)
+                                        {
+                                            <li>
+                                                <i class="flaticon-wifi-connection-signal-symbol"></i>
+                                                Wi-fi
+                                            </li>
+                                        }
+
+                                        @if (room.HasParking)
+                                        {
+                                            <li>
+                                                <i class="flaticon-parking"></i>
+                                                Parking
+                                            </li>
+                                        }
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hotel section end -->

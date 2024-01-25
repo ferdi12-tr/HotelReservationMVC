@@ -1,4 +1,6 @@
-﻿@{
+﻿@using HotelReservation.Areas.Customer.Models
+@model IEnumerable<Room>
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -72,9 +74,8 @@
     </div>
 </div>
 <!-- About hotel alpha end -->
-
-@* @await Html.PartialAsync("DisplayHotels"); *@
-<partial name="DisplayHotels" />
+@* @await Html.PartialAsync("DisplayRooms"); *@
+@await Html.PartialAsync("DisplayRooms", Model)
 
 <!-- Hotel Statistic start -->
 <div class="counters-4">
@@ -111,5 +112,3 @@
     </div>
 </div>
 <!-- Hotel Statistic end -->
-
-@await Html.PartialAsync("DisplayBlogs");
