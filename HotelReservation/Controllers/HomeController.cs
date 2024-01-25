@@ -34,6 +34,11 @@ namespace HotelReservation.Controllers
         {
             return View();
         }
+
+        public IActionResult Contact() 
+        { 
+            return View(); 
+        }
 		public IActionResult ErrorPage()
 		{
 			return View();
