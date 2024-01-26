@@ -103,10 +103,6 @@ namespace HotelReservation.Utils
                 throw new ArgumentException("Invalid date format. Please use the format MM/dd/yyyy.");
             }
 
-   //         string[] checkInList = checkInDate.Split('/');
-			//string[] checkOutList = checkOutDate.Split("/");
-			//var newCheckInDate = new DateTime(Convert.ToInt32(checkInList[2]), Convert.ToInt32(checkInList[1]), Convert.ToInt32(checkInList[0]));
-			//var newCheckOutDate = new DateTime(Convert.ToInt32(checkOutList[2]), Convert.ToInt32(checkOutList[1]), Convert.ToInt32(checkOutList[0]));
 			TimeSpan timeSpan = newCheckOutDate - newCheckInDate;
             return timeSpan.TotalHours * pricePerHour;
 		}

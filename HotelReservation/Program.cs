@@ -32,8 +32,6 @@ namespace HotelReservation
 			builder.Services.ConfigureApplicationCookie(options =>
 			{
 				options.LoginPath = "/Login/Index";
-				//options.LogoutPath = "/Identity/Account/Logout";
-				//options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 
 			});
 
